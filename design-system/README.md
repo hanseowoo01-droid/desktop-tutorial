@@ -13,9 +13,13 @@ Figma `AI서퍼-intro-홈페이지` 의 `Design_Guide` 프레임에서 추출한
 | 토큰 | 값 | 용도 |
 |------|-----|------|
 | `primary-50` | `#0e4dff` | 브랜드, CTA, 링크, 진행바 fill |
+| `warning-40` | `#fdc944` | 키워드 강조 텍스트 (예: `Decide.`) |
+| `warning-50` | `#ffc126` | 강조 언더라인 |
 | `gray-0` | `#ffffff` | on-dark 텍스트, 버튼 텍스트 |
+| `gray-5` | `#fcfcfc` | on-dark 서브 텍스트 |
 | `gray-10` | `#f5f5f5` | 배지 텍스트, 밝은 면 |
 | `gray-95` | `#1a1a1a` | 배지 배경, 다크 표면 |
+| `gray-100` | `#000000` | 다크 CTA 버튼 배경 |
 | `navy-10` | `#eceef3` | Controller 배경 |
 | `navy-30` | `#bdc3d4` | 진행바 track |
 | `navy-40` | `#98a0b7` | 디바이더, 보조 텍스트 |
@@ -32,7 +36,7 @@ Figma `AI서퍼-intro-홈페이지` 의 `Design_Guide` 프레임에서 추출한
 
 | 스타일 | size | weight | line-height | 비고 |
 |--------|------|--------|-------------|------|
-| Display | 72px | Bold | 1.2 | tracking 1.44px. Hero 타이틀 |
+| Display | 72px | Bold | 1.2 | Hero 영문 +1.44px / 다크 섹션 -1.44px |
 | H1 | 42px | Bold | 1.3 | 카드 대형 타이틀 |
 | H2 | 36px | Regular | 1.4 | 섹션 서브 헤드라인 |
 | H3 | 24px | Bold | 1.4 | 배지 / 카드 라벨 |
@@ -40,6 +44,7 @@ Figma `AI서퍼-intro-홈페이지` 의 `Design_Guide` 프레임에서 추출한
 | Button | 16px | SemiBold | 1.2 | 버튼 라벨 |
 | Body | 14px | Regular~Bold | 1.5 | 본문 / 네비 / 로그인 |
 
+자간(letter-spacing): 영문 대형 +1.44px, 다크 섹션 대형 -1.44px, 18px 한글 본문 -0.36px.
 모바일: 위 값의 약 0.6~0.7배 권장.
 
 ---
@@ -69,6 +74,7 @@ Figma `AI서퍼-intro-홈페이지` 의 `Design_Guide` 프레임에서 추출한
 | Primary (GNB) | `primary-50` | — | px20 py12, r8 | 14px Bold, white |
 | Primary (Hero CTA) | primary-50 @85% | — | w180 h60, px37 py16, r8, shadow button | 16px SemiBold, white |
 | Secondary (Hero) | navy-base @50% | white @60% | w180 h60, r8 | 16px SemiBold, white |
+| Dark (icon CTA) | `gray-100` black | — | w228 h60, px37 py16, r8 | 16px SemiBold + arrow 아이콘 |
 
 ### Hero_intro
 - 1370×788, radius **42px**, 다크 그라데이션 배경.
@@ -87,6 +93,13 @@ Figma `AI서퍼-intro-홈페이지` 의 `Design_Guide` 프레임에서 추출한
 
 ### Hero_folder
 - 400×400. folder1 / folder2 / folder3. status: default / disable.
+- 내부: 타이틀 36px Bold white + 설명 18px Regular `gray-10` (lh1.3, 자간 -0.36px). 텍스트군 gap 20.
+
+### Contents1 (full) — 임팩트 섹션
+- 900×900 원형 그래픽 베이스(mix-blend overlay).
+- 카피: 리드 18px(`gray-10`) → 대형 72px Bold (`Don't Read.` white + `Decide.` `warning-40`, 자간 -1.44px) → 서브 36px(`gray-5`).
+- 강조 언더라인: `warning-50`, h6.
+- CTA: Dark 버튼(`gray-100`) + arrow. status: full / empty.
 
 ---
 

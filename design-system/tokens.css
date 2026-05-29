@@ -9,10 +9,16 @@
   --color-primary-50: #0e4dff;          /* 메인 브랜드, CTA, 링크, 진행바 fill */
   --color-primary-50-85: rgba(14, 77, 255, 0.85); /* Hero CTA 반투명 */
 
+  /* ---------- Color · Warning / Accent (노랑 강조) ---------- */
+  --color-warning-40: #fdc944;          /* 키워드 강조 텍스트 (Decide.) */
+  --color-warning-50: #ffc126;          /* 강조 언더라인 */
+
   /* ---------- Color · Gray ---------- */
   --color-gray-0:   #ffffff;            /* 텍스트 on-dark, 버튼 텍스트 */
+  --color-gray-5:   #fcfcfc;            /* on-dark 서브 텍스트 */
   --color-gray-10:  #f5f5f5;            /* 밝은 배경, 배지 텍스트 */
   --color-gray-95:  #1a1a1a;            /* 배지 배경, 다크 표면 */
+  --color-gray-100: #000000;            /* 다크 CTA 버튼 배경 */
 
   /* ---------- Color · Graphic Navy ---------- */
   --color-navy-10:  #eceef3;            /* Controller 배경 등 옅은 면 */
@@ -46,7 +52,10 @@
   --lh-tight: 1.2;
   --lh-snug:  1.3;
   --lh-normal: 1.5;
-  --tracking-display: 1.44px;
+  /* 자간: Hero 영문 타이틀 +1.44px, 다크 섹션 대형 타이틀 -1.44px, 18px 한글 본문 -0.36px */
+  --tracking-display:  1.44px;
+  --tracking-display-tight: -1.44px;
+  --tracking-body-tight:    -0.36px;
 
   /* ---------- Spacing (8pt 기반) ---------- */
   --space-2:  2px;
