@@ -1,0 +1,81 @@
+/* =========================================================
+   AI서퍼 — Design System Tokens
+   Source: Figma "AI서퍼-intro-홈페이지" (Design_Guide)
+   Single source of truth. Reference vars in CSS:  var(--color-primary-50)
+   ========================================================= */
+
+:root {
+  /* ---------- Color · Primary ---------- */
+  --color-primary-50: #0e4dff;          /* 메인 브랜드, CTA, 링크, 진행바 fill */
+  --color-primary-50-85: rgba(14, 77, 255, 0.85); /* Hero CTA 반투명 */
+
+  /* ---------- Color · Gray ---------- */
+  --color-gray-0:   #ffffff;            /* 텍스트 on-dark, 버튼 텍스트 */
+  --color-gray-10:  #f5f5f5;            /* 밝은 배경, 배지 텍스트 */
+  --color-gray-95:  #1a1a1a;            /* 배지 배경, 다크 표면 */
+
+  /* ---------- Color · Graphic Navy ---------- */
+  --color-navy-10:  #eceef3;            /* Controller 배경 등 옅은 면 */
+  --color-navy-30:  #bdc3d4;            /* 진행바 track */
+  --color-navy-40:  #98a0b7;            /* 디바이더, 보조 텍스트 */
+  --color-navy-base: #20283f;           /* 다크 섹션 베이스 (rgba 32,40,63) */
+  --color-navy-base-50: rgba(32, 40, 63, 0.5); /* secondary 버튼 면 */
+
+  /* ---------- Color · Text ---------- */
+  --color-text-default: #1f2937;        /* GNB 네비 텍스트 (다크 그레이) */
+
+  /* ---------- Color · Surface / Overlay ---------- */
+  --surface-glass: rgba(255, 255, 255, 0.85); /* GNB 글래스 배경 */
+  --border-on-dark: rgba(255, 255, 255, 0.6);  /* secondary 버튼 테두리 */
+
+  /* ---------- Typography · Family ---------- */
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---------- Typography · Scale (desktop) ---------- */
+  --fs-display: 72px;   /* Hero 타이틀  | Bold | lh 1.2 | tracking 1.44px */
+  --fs-h1:      42px;   /* 카드 대형 타이틀 | Bold | lh 1.3 */
+  --fs-h2:      36px;   /* 섹션 서브 헤드라인 | Regular | lh normal */
+  --fs-h3:      24px;   /* 배지 / 카드 라벨 | Bold | lh normal */
+  --fs-lead:    18px;   /* 아이브로 / 리드 | Regular | lh normal */
+  --fs-button:  16px;   /* 버튼 | SemiBold */
+  --fs-body:    14px;   /* 본문 / 네비 | Regular~Bold */
+
+  --lh-tight: 1.2;
+  --lh-snug:  1.3;
+  --lh-normal: 1.5;
+  --tracking-display: 1.44px;
+
+  /* ---------- Spacing (8pt 기반) ---------- */
+  --space-2:  2px;
+  --space-6:  6px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-20: 20px;
+  --space-30: 30px;
+  --space-60: 60px;
+  --space-90: 90px;
+
+  /* ---------- Radius ---------- */
+  --radius-sm:   6px;    /* 배지 */
+  --radius-md:   8px;    /* 버튼 */
+  --radius-lg:   34px;   /* Controller pill */
+  --radius-xl:   42px;   /* Hero 카드 */
+  --radius-full: 9999px;
+
+  /* ---------- Elevation / Shadow ---------- */
+  --shadow-gnb:    0px 8px 12px rgba(0, 0, 0, 0.3);
+  --shadow-card:   0px 14px 10px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0px 4px 4px rgba(0, 0, 0, 0.12);
+
+  /* ---------- Effect ---------- */
+  --blur-glass: 15px;
+
+  /* ---------- Layout ---------- */
+  --gnb-height: 72px;
+  --container-max: 1920px;
+  --container-1800: 1800px;
+}
