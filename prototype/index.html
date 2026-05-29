@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI서퍼 — Beyond Information. Toward Direction.</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- ===== GNB ===== -->
+  <header class="gnb" id="gnb">
+    <div class="gnb__inner">
+      <a class="gnb__logo" href="#top">AI<span>서퍼</span></a>
+      <nav class="gnb__nav">
+        <ul class="gnb__menu">
+          <li><a href="#features">회사</a></li>
+          <li><a href="#impact">요금제</a></li>
+          <li><a href="#pain">고객사</a></li>
+        </ul>
+        <span class="gnb__divider"></span>
+        <a class="gnb__login" href="#">로그인</a>
+        <a class="btn btn--primary btn--sm" href="#">무료 체험</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <div class="hero__bg"></div>
+      <div class="hero__inner">
+        <div class="hero__copy reveal">
+          <p class="hero__eyebrow">AI AGENT-POWERED NEWS DATA INSIGHTS PLATFORM</p>
+          <h1 class="hero__title">Beyond Information.<br />Toward Direction.</h1>
+          <p class="hero__sub">정보를 넘어, 방향까지.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary btn--lg" href="#">무료로 시작하기</a>
+            <a class="btn btn--ghost btn--lg" href="#">도입문의</a>
+          </div>
+        </div>
+
+        <!-- folder deck -->
+        <div class="hero__deck">
+          <div class="deck" id="deck">
+            <article class="folder" data-i="0">
+              <h3>3,000여 매체</h3>
+              <p>국내외 3,000여 매체의 뉴스를 자동으로<br />수집하고 모니터링할 수 있는 서비스입니다.</p>
+            </article>
+            <article class="folder" data-i="1">
+              <h3>실시간 분석</h3>
+              <p>AI 에이전트가 쏟아지는 기사를 읽고<br />핵심 이슈와 흐름을 즉시 요약합니다.</p>
+            </article>
+            <article class="folder" data-i="2">
+              <h3>인사이트 도출</h3>
+              <p>단순 정보 나열이 아닌, 의사결정에<br />필요한 방향과 근거를 제시합니다.</p>
+            </article>
+          </div>
+          <div class="controller" id="controller">
+            <button class="controller__btn" id="prev" aria-label="이전">‹</button>
+            <button class="controller__btn" id="next" aria-label="다음">›</button>
+            <div class="controller__track"><div class="controller__fill" id="fill"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMPACT ===== -->
+    <section class="impact" id="impact">
+      <div class="impact__orb"></div>
+      <div class="impact__inner reveal">
+        <p class="impact__lead">3,000개 매체를 AI가 읽고, 당신은 결정만 합니다.</p>
+        <h2 class="impact__title">
+          <span class="q">“</span>Don't Read. <span class="hl">Decide.</span><span class="q">”</span>
+          <span class="impact__underline"></span>
+        </h2>
+        <p class="impact__sub">읽지 않고, 결정합니다.</p>
+        <a class="btn btn--dark btn--lg" href="#">사용법 확인하기 <span class="arrow">→</span></a>
+      </div>
+    </section>
+
+    <!-- ===== PAIN / FEATURES ===== -->
+    <section class="pain" id="pain">
+      <div class="pain__deco pain__deco--1"></div>
+      <div class="pain__deco pain__deco--2"></div>
+      <div class="pain__inner">
+        <h2 class="section-title reveal">뉴스 모니터링,<br />아직도 이렇게 일하고 계신가요?</h2>
+        <div class="cards" id="features">
+          <article class="card reveal">
+            <span class="card__badge">주당 10시간 소요</span>
+            <p class="card__title">매일 아침<br />2시간씩 스크랩</p>
+          </article>
+          <article class="card reveal" style="--d:.1s">
+            <span class="card__badge">중복 · 누락 발생</span>
+            <p class="card__title">사람이 일일이<br />키워드 검색</p>
+          </article>
+          <article class="card reveal" style="--d:.2s">
+            <span class="card__badge">의사결정 지연</span>
+            <p class="card__title">요약·정리에<br />지쳐버린 하루</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AGENTS ===== -->
+    <section class="agents reveal">
+      <h2 class="agents__title">3가지 AI 에이전트가<br />당신의 정보 작업을 대신합니다.</h2>
+      <div class="agents__cluster">
+        <span class="bubble bubble--main">AI</span>
+        <span class="bubble bubble--a">수집</span>
+        <span class="bubble bubble--b">분석</span>
+        <span class="bubble bubble--c">제안</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Beyond Information. Toward Direction.</p>
+    <small>Prototype · AI서퍼 design system</small>
+  </footer>
+
+  <!-- scroll progress -->
+  <div class="scrollbar" id="scrollbar"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
