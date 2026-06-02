@@ -64,35 +64,73 @@ def feathered_mask(h, w, feather):
     return m
 
 
-def match_brightness(src, dst_region, mask, strength=0.6):
-    """스크린샷(src)의 평균 밝기를 모니터 화면 노출에 살짝 맞춘다."""
+def match_brightness(src, dst_region, mask, l_strength=0.55, ab_strength=0.5):
+    """스크린샷(src)의 노출(L)과 색온도(a,b)를 모니터 화면 톤에 맞춘다."""
     if mask.sum() == 0:
         return src
     src_lab = cv2.cvtColor(src, cv2.COLOR_BGR2LAB).astype(np.float32)
     dst_lab = cv2.cvtColor(dst_region, cv2.COLOR_BGR2LAB).astype(np.float32)
     m = mask > 127
+    strengths = (l_strength, ab_strength, ab_strength)
     for c in range(3):
-        if c == 0:  # L 채널만 살짝 보정 (색은 보존)
-            s_mean = src_lab[..., c][m].mean()
-            d_mean = dst_lab[..., c][m].mean()
-            shift = (d_mean - s_mean) * strength
-            src_lab[..., c] = np.clip(src_lab[..., c] + shift, 0, 255)
+        s_mean = src_lab[..., c][m].mean()
+        d_mean = dst_lab[..., c][m].mean()
+        shift = (d_mean - s_mean) * strengths[c]
+        src_lab[..., c] = np.clip(src_lab[..., c] + shift, 0, 255)
     return cv2.cvtColor(src_lab.astype(np.uint8), cv2.COLOR_LAB2BGR)
 
 
-def add_glare(img, corners, intensity=0.12):
-    """화면에 대각선 방향의 약한 광택 그라데이션을 더해 유리 반사 느낌."""
+def preserve_reflections(warped, monitor_region, mask, amount=0.5):
+    """원본 모니터 화면에 있던 유리 반사/광택을 새 화면 위에 보존한다.
+    원본의 '밝은 부분(반사광)'만 추출해서 screen 블렌드로 덧입힌다."""
+    mon_gray = cv2.cvtColor(monitor_region, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    m = mask > 127
+    if m.sum() == 0:
+        return warped
+    # 화면 영역의 평균보다 밝은 부분 = 반사광 추정
+    thr = np.percentile(mon_gray[m], 75)
+    highlight = np.clip((mon_gray - thr) / max(255 - thr, 1), 0, 1)
+    highlight = cv2.GaussianBlur(highlight, (0, 0), 5)[..., None]
+    w = warped.astype(np.float32) / 255.0
+    # screen blend: 1-(1-a)(1-b)
+    blended = 1 - (1 - w) * (1 - highlight * amount)
+    return np.clip(blended * 255, 0, 255).astype(np.uint8)
+
+
+def gradient_blur(img, mask, corners, max_blur=9):
+    """원본의 얕은 심도(왼쪽 선명 → 오른쪽 흐림)를 모방한 그라데이션 블러.
+    화면의 좌→우 위치에 따라 점점 강한 블러를 섞는다."""
     h, w = img.shape[:2]
+    xs = corners[:, 0]
+    x_min, x_max = xs.min(), xs.max()
+    if x_max - x_min < 1:
+        return img
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
-    # 좌상->우하 대각선 그라데이션
-    g = (xx / w + yy / h) / 2.0
-    g = np.clip((g - 0.15) / 0.5, 0, 1)
-    glare = (g[..., None] * 255 * intensity).astype(np.float32)
-    out = np.clip(img.astype(np.float32) + glare, 0, 255).astype(np.uint8)
-    return out
+    t = np.clip((xx - x_min) / (x_max - x_min), 0, 1)  # 0=왼쪽,1=오른쪽
+    t = t ** 1.5  # 오른쪽 끝에서 급격히
+    blurred = cv2.GaussianBlur(img, (0, 0), max_blur)
+    a = t[..., None]
+    out = img.astype(np.float32) * (1 - a) + blurred.astype(np.float32) * a
+    return np.clip(out, 0, 255).astype(np.uint8)
 
 
-def composite(monitor, screen, corners, feather=8, do_glare=True, do_match=True):
+def match_grain(img, monitor_region, mask, strength=0.8):
+    """원본 사진의 노이즈(그레인) 세기를 추정해 동일한 그레인을 입힌다."""
+    m = mask > 127
+    if m.sum() == 0:
+        return img
+    gray = cv2.cvtColor(monitor_region, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    smooth = cv2.GaussianBlur(gray, (0, 0), 2)
+    noise_sigma = float(np.std((gray - smooth)[m])) * strength
+    if noise_sigma < 0.5:
+        return img
+    noise = np.random.normal(0, noise_sigma, img.shape[:2])[..., None]
+    out = img.astype(np.float32) + noise
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
+def composite(monitor, screen, corners, feather=6,
+              do_reflections=True, do_match=True, do_blur=True, do_grain=True):
     H, W = monitor.shape[:2]
     sh, sw = screen.shape[:2]
 
@@ -106,11 +144,18 @@ def composite(monitor, screen, corners, feather=8, do_glare=True, do_match=True)
     mask_src = np.full((sh, sw), 255, dtype=np.uint8)
     mask = cv2.warpPerspective(mask_src, Hmat, (W, H), flags=cv2.INTER_LINEAR)
 
+    # 1) 노출/색온도 매칭
     if do_match:
         warped = match_brightness(warped, monitor, mask)
-    if do_glare:
-        glared = add_glare(warped, corners)
-        warped = np.where(mask[..., None] > 127, glared, warped)
+    # 2) 얕은 심도(좌선명→우흐림) 모방
+    if do_blur:
+        warped = gradient_blur(warped, mask, corners)
+    # 3) 원본 유리 반사/광택 보존
+    if do_reflections:
+        warped = preserve_reflections(warped, monitor, mask)
+    # 4) 필름 그레인 일치
+    if do_grain:
+        warped = match_grain(warped, monitor, mask)
 
     # 가장자리 페더링
     if feather > 0:
@@ -130,9 +175,11 @@ def main():
     ap.add_argument("--out", default="images/composite.png", help="결과 저장 경로")
     ap.add_argument("--corners", help="'x1,y1 x2,y2 x3,y3 x4,y4' (TL TR BR BL)")
     ap.add_argument("--pick", action="store_true", help="클릭으로 코너 선택 (GUI)")
-    ap.add_argument("--feather", type=int, default=8)
-    ap.add_argument("--no-glare", action="store_true")
+    ap.add_argument("--feather", type=int, default=6)
+    ap.add_argument("--no-reflections", action="store_true")
     ap.add_argument("--no-match", action="store_true")
+    ap.add_argument("--no-blur", action="store_true")
+    ap.add_argument("--no-grain", action="store_true")
     args = ap.parse_args()
 
     monitor = cv2.imread(args.monitor, cv2.IMREAD_COLOR)
@@ -156,8 +203,10 @@ def main():
 
     out = composite(monitor, screen, corners,
                     feather=args.feather,
-                    do_glare=not args.no_glare,
-                    do_match=not args.no_match)
+                    do_reflections=not args.no_reflections,
+                    do_match=not args.no_match,
+                    do_blur=not args.no_blur,
+                    do_grain=not args.no_grain)
     cv2.imwrite(args.out, out)
     print(f"저장 완료: {args.out}")
 
