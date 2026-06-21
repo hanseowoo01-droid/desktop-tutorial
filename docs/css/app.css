@@ -38,7 +38,7 @@ button { font-family: inherit; }
 .gnb__item.is-active { background: #ffe4e3; color: #ff160e; }
 
 /* ---------- Body: LNB + content ---------- */
-.body { display: flex; align-items: stretch; min-height: calc(100vh - 60px); }
+.body { display: flex; align-items: stretch; min-height: calc(100vh - 60px); background: #fff; }
 .lnb {
   flex: 0 0 260px; width: 260px;
   background: #fcfdff; border-right: 1px solid #e9ebf0;
@@ -57,7 +57,7 @@ button { font-family: inherit; }
 .lnb__item:hover { background: var(--gray-50); }
 .lnb__item.is-active { background: #ffe4e3; color: #ff160e; }
 
-.content { flex: 1; min-width: 0; padding: 44px 72px 96px; max-width: 1660px; }
+.content { flex: 1; min-width: 0; padding: 44px 72px 96px; max-width: 1660px; background: #fff; }
 .page-title em { font-style: normal; color: var(--text-subtle); font-weight: 500; }
 
 /* 컴포넌트 데모(Figma export) 이미지 */
@@ -65,10 +65,10 @@ button { font-family: inherit; }
 .demoimg { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); }
 
 /* ---------- Page header ---------- */
-.bc { font-size: 13px; color: var(--text-subtle); margin-bottom: 14px; }
-.bc span { color: var(--text-disabled); margin: 0 6px; }
-.page-title { font-size: 32px; font-weight: 700; color: var(--text-strong); margin: 0 0 12px; letter-spacing: -.01em; }
-.page-desc { font-size: 15px; color: var(--text-default); margin: 0 0 36px; max-width: 880px; }
+.bc { font-size: 13px; color: #9aa2b1; margin-bottom: 14px; }
+.bc span { color: #c5cad4; margin: 0 6px; }
+.page-title { font-size: 40px; font-weight: 700; color: #141a24; margin: 0 0 14px; letter-spacing: -.01em; }
+.page-desc { font-size: 17px; color: #50596b; margin: 0 0 44px; }
 
 /* ---------- Sections ---------- */
 .sec { margin-bottom: 56px; }
