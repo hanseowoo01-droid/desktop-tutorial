@@ -55,7 +55,23 @@ button { font-family: inherit; }
 .lnb__item:hover { background: var(--gray-50); }
 .lnb__item.is-active { background: var(--rdpline-5); color: var(--rdpline-50); font-weight: 600; }
 
-.content { flex: 1; min-width: 0; padding: 44px 72px 96px; max-width: 1660px; }
+.content { flex: 1; min-width: 0; padding: 0 0 96px; }
+
+/* ---------- Figma screen image ---------- */
+.page { position: relative; max-width: 1660px; margin: 0 auto; }
+.screen { display: block; width: 100%; height: auto; }
+/* 이미지에 그려진 AISURFER/RDPLINE/WIGOVIEW 탭 위에 얹는 투명 클릭 영역 */
+.prodhit { position: absolute; display: flex; }
+.prodhit .hit {
+  height: 100%; padding: 0; border: 0; background: transparent; cursor: pointer;
+  border-radius: 8px; transition: background var(--duration-fast) var(--ease-standard);
+}
+.prodhit .hit:hover { background: rgba(20, 26, 36, .05); }
+
+/* 준비 중 섹션 */
+.empty { padding: 96px 72px; }
+.empty h1 { font-size: 32px; font-weight: 700; color: var(--text-strong); margin: 0 0 12px; }
+.empty p { font-size: 15px; color: var(--text-subtle); margin: 0; }
 
 /* ---------- Page header ---------- */
 .bc { font-size: 13px; color: var(--text-subtle); margin-bottom: 14px; }
