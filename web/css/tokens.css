@@ -1,0 +1,132 @@
+/* ============================================================
+   BECUAI Design System — Design Tokens
+   Foundation 색상·타이포·간격·반경·모션 토큰
+   3개 제품 테마: AISURFER(파랑) / RDPLINE(빨강) / WIGOVIEW(초록)
+   ============================================================ */
+
+:root {
+  /* ---- Primitive: AISURFER (primary) ramp ---- */
+  --aisurfer-5:  #e8efff;
+  --aisurfer-10: #c9d7fe;
+  --aisurfer-30: #7c9eff;
+  --aisurfer-40: #4d79ff;
+  --aisurfer-50: #0e4dff;
+  --aisurfer-60: #003de9;
+  --aisurfer-70: #0030b7;
+  --aisurfer-80: #002285;
+
+  /* ---- Primitive: RDPLINE ramp ---- */
+  --rdpline-5:  #ffe4e3;
+  --rdpline-10: #fecbc9;
+  --rdpline-30: #ff807c;
+  --rdpline-40: #ff5f59;
+  --rdpline-50: #ff160e;
+  --rdpline-60: #e90800;
+  --rdpline-70: #b70600;
+  --rdpline-80: #830400;
+
+  /* ---- Primitive: WIGOVIEW ramp ---- */
+  --wigoview-5:  #e6f6ec;
+  --wigoview-10: #c7ead4;
+  --wigoview-30: #66c389;
+  --wigoview-40: #34af68;
+  --wigoview-50: #15a04b;
+  --wigoview-60: #0d8c40;
+  --wigoview-70: #0a6e33;
+  --wigoview-80: #075325;
+
+  /* ---- Neutral / Gray ---- */
+  --gray-0:   #ffffff;
+  --gray-50:  #f7f8fa;
+  --gray-100: #eef1f6;
+  --gray-150: #e5e8eb;
+  --gray-200: #d8dce3;
+  --gray-300: #c7cdd8;
+  --gray-400: #9aa2b1;
+  --gray-500: #717b8c;
+  --gray-600: #50596b;
+  --gray-800: #2b3445;
+  --gray-900: #141a24;
+
+  /* ---- Semantic status (제품 무관 고정) ---- */
+  --success: #15a04b;
+  --success-bg: #e6f6ec;
+  --warning: #f5a623;
+  --warning-bg: #fff4e0;
+  --danger:  #eb0000;
+  --danger-bg: #ffe8e8;
+  --info:    #0e4dff;
+  --info-bg: #e8efff;
+
+  /* ---- Text ---- */
+  --text-strong:  var(--gray-900);
+  --text-default: var(--gray-600);
+  --text-subtle:  var(--gray-500);
+  --text-disabled:var(--gray-400);
+  --text-inverse: #ffffff;
+
+  /* ---- Surface / Border ---- */
+  --bg-page:    var(--gray-50);
+  --bg-surface: var(--gray-0);
+  --border:     var(--gray-100);
+  --border-strong: var(--gray-150);
+
+  /* ---- Brand (default = AISURFER). 제품 테마에서 override ---- */
+  --brand-bg:      var(--aisurfer-5);
+  --brand-border:  var(--aisurfer-30);
+  --brand-solid:   var(--aisurfer-50);
+  --brand-hover:   var(--aisurfer-60);
+  --brand-pressed: var(--aisurfer-70);
+  --brand-on:      #ffffff;
+
+  /* ---- Radius ---- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
+
+  /* ---- Spacing (4px 배수) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- Typography ---- */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+               "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px rgba(20, 26, 36, .06);
+  --shadow-md: 0 4px 16px rgba(20, 26, 36, .08);
+  --shadow-lg: 0 12px 32px rgba(20, 26, 36, .12);
+
+  /* ---- Motion ---- */
+  --duration-fast: 100ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --ease-decelerate: cubic-bezier(0, 0, .2, 1);
+  --ease-accelerate: cubic-bezier(.4, 0, 1, 1);
+}
+
+/* ===== 제품 테마 — brand 토큰만 교체 (의미색·중립은 공통) ===== */
+[data-theme="aisurfer"] {
+  --brand-bg: var(--aisurfer-5);  --brand-border: var(--aisurfer-30);
+  --brand-solid: var(--aisurfer-50); --brand-hover: var(--aisurfer-60); --brand-pressed: var(--aisurfer-70);
+}
+[data-theme="rdpline"] {
+  --brand-bg: var(--rdpline-5);  --brand-border: var(--rdpline-30);
+  --brand-solid: var(--rdpline-50); --brand-hover: var(--rdpline-60); --brand-pressed: var(--rdpline-70);
+}
+[data-theme="wigoview"] {
+  --brand-bg: var(--wigoview-5);  --brand-border: var(--wigoview-30);
+  --brand-solid: var(--wigoview-50); --brand-hover: var(--wigoview-60); --brand-pressed: var(--wigoview-70);
+}
