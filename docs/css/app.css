@@ -60,6 +60,10 @@ button { font-family: inherit; }
 .content { flex: 1; min-width: 0; padding: 44px 72px 96px; max-width: 1660px; }
 .page-title em { font-style: normal; color: var(--text-subtle); font-weight: 500; }
 
+/* 컴포넌트 데모(Figma export) 이미지 */
+.demowrap { display: flex; flex-direction: column; gap: 16px; }
+.demoimg { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); }
+
 /* ---------- Page header ---------- */
 .bc { font-size: 13px; color: var(--text-subtle); margin-bottom: 14px; }
 .bc span { color: var(--text-disabled); margin: 0 6px; }

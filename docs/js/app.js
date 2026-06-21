@@ -1,10 +1,13 @@
 /* ============================================================
-   BECUAI Design System — App (coded pages, Figma 기준)
-   텍스트·UI는 HTML/CSS로 코딩, 아이콘은 인라인 SVG.
-   제품 변형(AISURFER/RDPLINE/WIGOVIEW)은 data-theme로 brand 토큰 교체.
+   BECUAI Design System — App (하이브리드)
+   · UX·Foundation: 텍스트/UI 모두 코드(HTML/CSS)
+   · Component: 텍스트·가이드는 코드, 데모(미리보기) 박스는 Figma PNG
+     (제품 탭으로 데모 PNG를 AISURFER/RDPLINE/WIGOVIEW로 스왑)
    ============================================================ */
 (function () {
   "use strict";
+
+  const MODEL = window.PAGE_MODEL || {};
 
   /* ---------------- Navigation (Figma LNB 구조) ---------------- */
   const NAV = {
@@ -54,6 +57,11 @@
       <h1 class="page-title">${kr} <em>${en}</em></h1>
       <p class="page-desc">${desc}</p>`;
   }
+  function headRaw(section, crumb, title, desc) {
+    return `<div class="bc">홈<span>›</span>${SECTION_LABEL[section]}<span>›</span>${crumb}</div>
+      <h1 class="page-title">${title}</h1>
+      <p class="page-desc">${desc}</p>`;
+  }
   function themed(inner) {
     const tabs = ["aisurfer", "rdpline", "wigoview"].map((p, i) =>
       `<button class="tab ${i === 0 ? "is-active" : ""}" data-p="${p}"><span class="dot"></span>${p.toUpperCase()}</button>`).join("");
@@ -74,16 +82,24 @@
       <div class="guide__col dont"><div class="guide__bar">✕ 지양 (Don't)</div><div class="guide__body"><ul>${donts.map(x => `<li>• ${x}</li>`).join("")}</ul></div></div>
     </div></div>`;
   }
-  // Figma의 컴포넌트 가이드 공통 문구(파일에 동일 텍스트가 들어 있음)
-  const G_DO = ["필터·다중 선택 토큰으로 사용", "선택 상태를 명확히 강조", "자주 쓰는 옵션을 앞에 배치"];
-  const G_DONT = ["읽기 전용 분류에 사용 (태그 권장)", "선택 상태가 모호한 스타일", "칩을 주요 액션 버튼으로 사용"];
-  const eye = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9aa2b1" stroke-width="1.6"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>`;
-  const check = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-6.5"/></svg>`;
+  function grp(title, items) {
+    return `<h2 class="ov-grp">${title}</h2><div class="grid-cards">${items.map(a => card(a[0], a[1], a[2], a[3])).join("")}</div>`;
+  }
+  function ramp(name, key) {
+    const steps = [5, 10, 30, 40, 50, 60, 70, 80];
+    return `<div class="ramp-name">${name} <em>primary</em></div>
+      <div class="ramp">${steps.map(s => {
+        const light = s <= 30;
+        return `<div class="swatch ${light ? "dark" : ""}" style="background:var(--${key}-${s})"><b>primary/${s}${s === 50 ? " · Base" : ""}</b></div>`;
+      }).join("")}</div>`;
+  }
+  function sw(name, hex, light) { return `<div class="swatch ${light ? "dark" : ""}" style="background:${hex}"><b>${name}</b>${hex}</div>`; }
+  function stCard(big, t, d) { return `<div class="st-card"><div class="st-big">${big}</div><b>${t}</b><span>${d}</span></div>`; }
 
   /* ---------------- Pages ---------------- */
   const P = {};
 
-  /* ===== UX ===== */
+  /* ===== UX (코드) ===== */
   P["ux/overview"] = () => header("ux", "UX 원칙", "Overview",
     "BECUAI 제품군(AISURFER · RDPLINE · WIGOVIEW)의 UI/UX를 글로벌 서비스 수준으로 재정의하기 위한 전사 공통 디자인 원칙입니다. PO 인터뷰와 제품 직접 사용 분석에서 도출한 4대 원칙을 기준으로, 모든 제품이 하나의 일관된 경험을 지향합니다.") +
     sec("4대 원칙", "",
@@ -146,7 +162,7 @@
         <div class="pr__mid"><b>${t}</b><div class="pr__tags">${tags.map(x => `<span>${x}</span>`).join("")}</div></div>
         <div class="pr__oc"><span>기대 효과</span><b>${eff}</b></div></div>`).join("")}</div>`);
 
-  /* ===== Foundation ===== */
+  /* ===== Foundation (코드) ===== */
   P["foundation/overview"] = () => header("foundation", "Foundation", "Foundation",
     "Foundation은 BECUAI 디자인 시스템의 토대가 되는 시각 원칙과 디자인 토큰의 모음입니다. 모든 컴포넌트와 화면은 이 기초 위에서 일관되게 만들어집니다. 아래 항목을 통해 각 토큰을 살펴보세요.") +
     `<div class="grid-cards">
@@ -164,10 +180,10 @@
     sec("Primary · 제품별 브랜드", "제품을 식별하고 핵심 액션을 강조하는 주조색입니다. 제품별로 색상만 다르고 스케일(5~95)과 사용 규칙은 동일합니다. 기본값은 primary/50입니다.",
       ramp("AISURFER", "aisurfer") + ramp("RDPLINE", "rdpline") + ramp("WIGOVIEW", "wigoview")) +
     sec("Neutral · 공통", "텍스트·배경·보더 등 화면 대부분을 구성하는 무채색입니다. 3제품 공통으로 사용합니다.",
-      `<div class="ramp">${[["g0", "Gray 0", "#ffffff", 1], ["g50", "Gray 50", "#f7f8fa", 1], ["g100", "Gray 100", "#eef1f6", 1],
-        ["g200", "Gray 200", "#d8dce3", 1], ["g300", "Gray 300", "#c7cdd8", 1], ["g500", "Gray 500", "#717b8c"],
-        ["g600", "Gray 600", "#50596b"], ["g900", "Gray 900", "#141a24"]]
-        .map(([id, n, hex, light]) => sw(n, hex, light)).join("")}</div>`) +
+      `<div class="ramp">${[["Gray 0", "#ffffff", 1], ["Gray 50", "#f7f8fa", 1], ["Gray 100", "#eef1f6", 1],
+        ["Gray 200", "#d8dce3", 1], ["Gray 300", "#c7cdd8", 1], ["Gray 500", "#717b8c"],
+        ["Gray 600", "#50596b"], ["Gray 900", "#141a24"]]
+        .map(([n, hex, light]) => sw(n, hex, light)).join("")}</div>`) +
     sec("Semantic · 공통", "상태와 피드백을 전달하는 의미 색상입니다. 3제품 공통입니다.",
       `<div class="ramp">${[["Success", "#15a04b"], ["Warning", "#f5a623"], ["Error", "#eb0000"], ["Info", "#0e4dff"]]
         .map(([n, hex]) => sw(n, hex)).join("")}</div>`);
@@ -228,336 +244,48 @@
         <div class="ico-grid">${names.map(n => `<div class="ico-tile">${ic(n, 24)}<span>${n}</span></div>`).join("")}</div></div>`).join("")}
     </div>`;
 
-  /* ===== Component ===== */
-  P["component/overview"] = () => header("component", "Component", "Component",
-    "BECUAI 제품군에서 공통으로 사용하는 UI 컴포넌트 모음입니다. AISURFER 디자인 시스템을 기준으로 정리했으며, 모든 컴포넌트는 Foundation 토큰(색상·타이포·간격·아이콘)을 사용합니다.") +
-    grp("액션", [["버튼", "Button", "사용자 행동을 실행하는 기본 액션", "button"]]) +
-    grp("입력", [
-      ["입력 필드", "Input", "한 줄 텍스트 입력", "input"], ["텍스트 영역", "Textarea", "여러 줄 텍스트 입력", "textarea"],
-      ["검색", "Search", "검색어 입력 필드", "search"], ["셀렉트", "Select", "목록에서 선택하는 드롭다운", "select"],
-      ["체크박스", "Checkbox", "다중 선택", "checkbox"], ["라디오", "Radio", "단일 선택", "radio"],
-      ["토글 스위치", "Toggle", "켜기/끄기 전환", "toggle"], ["날짜 입력", "Date input", "날짜 입력 필드", "date-input"],
-      ["달력", "Calendar", "날짜에서 날짜 선택", "calendar"]]) +
-    grp("탐색", [
-      ["탭", "Tab", "화면·콘텐츠 전환", "tab"], ["페이지네이션", "Pagination", "목록 페이지 이동", "pagination"],
-      ["메뉴", "Menu", "내비게이션 메뉴", "menu"], ["아코디언", "Accordion", "접고 펴는 패널", "accordion"]]) +
-    grp("정보 표시", [
-      ["테이블", "Table", "데이터를 표로 표시", "table"], ["리스트", "List", "항목 목록", "list"],
-      ["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
-      ["칩", "Chip", "선택·필터 토큰", "chip"], ["타이틀", "Title", "영역 제목", "title"],
-      ["캐러셀", "Carousel", "슬라이드 콘텐츠", "carousel"]]) +
-    grp("피드백", [
-      ["모달", "Modal", "집중이 필요한 다이얼로그", "modal"], ["툴팁", "Tooltip", "보조 설명 말풍선", "tooltip"],
-      ["얼럿", "Alert", "광고 알림 메시지", "alert"]]);
+  /* ===== Component overview (코드 카드) ===== */
+  P["component/overview"] = () => {
+    const h = (MODEL["component/overview"] || {}).head || { crumb: "Overview", title: "Component", desc: "" };
+    return headRaw("component", h.crumb, h.title, h.desc) +
+      grp("액션", [["버튼", "Button", "사용자 행동을 실행하는 기본 액션", "button"]]) +
+      grp("입력", [
+        ["입력 필드", "Input", "한 줄 텍스트 입력", "input"], ["텍스트 영역", "Textarea", "여러 줄 텍스트 입력", "textarea"],
+        ["검색", "Search", "검색어 입력 필드", "search"], ["셀렉트", "Select", "목록에서 선택하는 드롭다운", "select"],
+        ["체크박스", "Checkbox", "다중 선택", "checkbox"], ["라디오", "Radio", "단일 선택", "radio"],
+        ["토글 스위치", "Toggle", "켜기/끄기 전환", "toggle"], ["날짜 입력", "Date input", "날짜 입력 필드", "date-input"],
+        ["달력", "Calendar", "날짜에서 날짜 선택", "calendar"]]) +
+      grp("탐색", [
+        ["탭", "Tab", "화면·콘텐츠 전환", "tab"], ["페이지네이션", "Pagination", "목록 페이지 이동", "pagination"],
+        ["메뉴", "Menu", "내비게이션 메뉴", "menu"], ["아코디언", "Accordion", "접고 펴는 패널", "accordion"]]) +
+      grp("정보 표시", [
+        ["테이블", "Table", "데이터를 표로 표시", "table"], ["리스트", "List", "항목 목록", "list"],
+        ["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
+        ["칩", "Chip", "선택·필터 토큰", "chip"], ["타이틀", "Title", "영역 제목", "title"],
+        ["캐러셀", "Carousel", "슬라이드 콘텐츠", "carousel"]]) +
+      grp("피드백", [
+        ["모달", "Modal", "집중이 필요한 다이얼로그", "modal"], ["툴팁", "Tooltip", "보조 설명 말풍선", "tooltip"],
+        ["얼럿", "Alert", "광고 알림 메시지", "alert"]]);
+  };
 
-  P["component/button"] = () => header("component", "버튼", "Button",
-    "사용자가 행동을 실행하는 가장 기본적인 컴포넌트입니다. 한 화면에서 가장 중요한 행동 하나에 Primary를 사용합니다.") +
-    themed(
-      block("종류 Variant",
-        cell(`<button class="btn btn--primary">버튼</button>`, "Primary") +
-        cell(`<button class="btn btn--secondary">버튼</button>`, "Secondary") +
-        cell(`<button class="btn btn--tertiary">버튼</button>`, "Tertiary") +
-        cell(`<button class="btn btn--black">버튼</button>`, "Black")) +
-      block("크기 Size",
-        cell(`<button class="btn btn--primary">버튼</button>`, "Medium") +
-        cell(`<button class="btn btn--primary btn--sm">버튼</button>`, "Small") +
-        cell(`<button class="btn btn--primary btn--xs">버튼</button>`, "XSmall")) +
-      block("상태 State",
-        cell(`<button class="btn btn--primary">버튼</button>`, "Default") +
-        cell(`<button class="btn btn--primary" style="background:var(--brand-hover)">버튼</button>`, "Hover") +
-        cell(`<button class="btn btn--primary" style="background:var(--brand-pressed)">버튼</button>`, "Pressed") +
-        cell(`<button class="btn is-disabled" disabled>버튼</button>`, "Disabled"))
-    ) + guide(["한 화면에 Primary는 하나만", "버튼 라벨은 동사로 명확하게", "중요도 순서에 맞게 종류 선택"],
-              ["Primary 버튼 여러 개 나열", "‘확인/취소’ 모두 Primary 사용", "버튼 안에 긴 문장 넣기"]);
-
-  P["component/input"] = () => header("component", "입력 필드", "Input",
-    "사용자가 한 줄 텍스트를 입력하는 기본 폼 요소입니다.") +
-    themed(block("상태 State",
-      field("기본 (default)") + field("포커스 (focused)", "focus") +
-      field("오류 (error)", "error") + field("비활성 (disabled)", "disabled"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/textarea"] = () => header("component", "텍스트영역", "Textarea",
-    "여러 줄의 텍스트를 입력받는 입력 필드입니다. 입력량이 많은 경우 사용합니다.") +
-    themed(block("상태 State",
-      ta("기본 (default)") + ta("포커스 (focused)", "focus") +
-      ta("오류 (error)", "error") + ta("비활성 (disabled)", "disabled"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/search"] = () => header("component", "검색", "Search",
-    "키워드로 콘텐츠를 검색하는 입력 필드입니다.") +
-    themed(block("상태 State",
-      searchField("기본 (default)") + searchField("포커스 (focused)", "focus") + searchField("오류 (error)", "error"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/select"] = () => header("component", "셀렉트", "Select",
-    "정해진 목록에서 하나를 선택하는 드롭다운입니다.") +
-    themed(block("상태 State",
-      selectField("기본 (default)") + selectField("포커스 (focused)", "focus") +
-      selectField("오류 (error)", "error") + selectField("비활성 (disabled)", "disabled"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/date-input"] = () => header("component", "날짜 입력", "Date Input",
-    "날짜를 직접 입력하거나 선택하는 입력 필드입니다.") +
-    themed(block("상태 State",
-      dateField("기본 (default)") + dateField("포커스 (focused)", "focus") +
-      dateField("오류 (error)", "error") + dateField("비활성 (disabled)", "disabled"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/calendar"] = () => header("component", "캘린더", "Calendar",
-    "날짜를 선택하는 달력 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      cell(calendarEl("day"), "일자 (day)") + cell(calendarEl("period"), "기간 (period)"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/checkbox"] = () => header("component", "체크박스", "Checkbox",
-    "여러 항목 중 0개 이상을 선택할 때 사용합니다.") +
-    themed(block("상태 State",
-      cell(cbox(false), "미선택") + cell(cbox(true), "선택됨") +
-      cell(cbox(true, true), "부분 선택") + cell(cbox(false, false, true), "비활성"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/radio"] = () => header("component", "라디오", "Radio",
-    "여러 항목 중 하나만 선택할 때 사용합니다.") +
-    themed(block("상태 State",
-      cell(rbox(false), "미선택") + cell(rbox(true), "선택됨") + cell(rbox(false, true), "비활성"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/toggle"] = () => header("component", "토글 스위치", "Toggle",
-    "설정을 즉시 켜고 끄는 스위치입니다.") +
-    themed(block("상태 State",
-      cell(tog(false), "꺼짐 (Off)") + cell(tog(true), "켜짐 (On)") + cell(tog(false, true), "비활성"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/tab"] = () => header("component", "탭", "Tab",
-    "콘텐츠를 분류해 전환하는 내비게이션 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      cell(`<div class="tabset line"><span class="t is-on">탭 1</span><span class="t">탭 2</span><span class="t">탭 3</span></div>`, "라인 (line)") +
-      cell(`<div class="tabset fill"><span class="t is-on">탭 1</span><span class="t">탭 2</span><span class="t">탭 3</span></div>`, "채움 (fill)"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/pagination"] = () => header("component", "페이지네이션", "Pagination",
-    "여러 페이지를 이동하는 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      `<div class="pgn">
-        <span class="pg pg-arr">‹</span>
-        <span class="pg is-on">1</span><span class="pg">2</span><span class="pg">3</span>
-        <span class="pg pg-dots">…</span><span class="pg">10</span>
-        <span class="pg pg-arr">›</span>
-      </div>`)) +
-    guide(G_DO, G_DONT);
-
-  P["component/menu"] = () => header("component", "메뉴", "Menu",
-    "목록형 선택 항목을 제공하는 드롭다운 메뉴입니다.") +
-    themed(block("유형 Type",
-      cell(menuEl(["내 프로필", "설정", "로그아웃"]), "3개 항목") +
-      cell(menuEl(["대시보드", "프로젝트", "멤버", "알림", "결제", "통계", "설정", "로그아웃"]), "8개 항목"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/accordion"] = () => header("component", "아코디언", "Accordion",
-    "영역을 접고 펴서 정보를 정리하는 컴포넌트입니다.") +
-    themed(block("상태 State",
-      cell(acc(false), "닫힘 (Default)") + cell(acc(true), "펼침 (select)"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/table"] = () => header("component", "테이블", "Table",
-    "데이터를 행과 열로 정리해 표시하는 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      cell(tableEl(false), "기본 (basic)") + cell(tableEl(true), "체크박스 (checkbox)"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/list"] = () => header("component", "리스트", "List",
-    "항목을 나열해 표시하는 목록 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      cell(listEl(1), "1depth") + cell(listEl(2), "2depth") + cell(listEl(3), "3depth"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/title"] = () => header("component", "타이틀", "Title",
-    "영역의 제목을 표시하는 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      cell(`<div class="ttl ttl-1"><span class="bar"></span><b>1depth 타이틀</b></div>`, "1depth") +
-      cell(`<div class="ttl ttl-2"><b>2depth 타이틀</b><span>보조 설명 텍스트</span></div>`, "2depth"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/carousel"] = () => header("component", "캐러셀", "Carousel",
-    "여러 콘텐츠를 좌우로 넘겨 보여주는 컴포넌트입니다.") +
-    themed(block("유형 Type",
-      `<div class="crsl">
-        <span class="crsl-arr">‹</span>
-        <div class="crsl-stage"><div class="crsl-slide">Slide</div></div>
-        <span class="crsl-arr">›</span>
-      </div>
-      <div class="crsl-dots"><i class="is-on"></i><i></i><i></i><i></i></div>`)) +
-    guide(G_DO, G_DONT);
-
-  P["component/modal"] = () => header("component", "모달", "Modal",
-    "현재 화면 위에 띄워 중요한 정보나 작업을 처리하는 대화 상자입니다.") +
-    themed(block("크기 Size",
-      cell(modalEl(), "기본 (medium)"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/tooltip"] = () => header("component", "툴팁", "Tooltip",
-    "요소에 대한 보조 설명을 짧게 제공하는 컴포넌트입니다.") +
-    themed(block("방향 Direction",
-      cell(tip("top"), "top") + cell(tip("bottom"), "bottom") + cell(tip("left"), "left") + cell(tip("right"), "right"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/badge"] = () => header("component", "배지", "Badge",
-    "수량이나 상태를 작게 표시하는 표식입니다.") +
-    themed(
-      block("유형 Type",
-        cell(`<span class="badge badge--solid">Badge</span>`, "solid") +
-        cell(`<span class="badge badge--outline">Badge</span>`, "outline") +
-        cell(`<span class="badge badge--pastel">Badge</span>`, "pastel")) +
-      block("컬러 Color",
-        cell(`<span class="badge badge--solid">Primary</span>`, "primary") +
-        cell(`<span class="badge c-success">Success</span>`, "success") +
-        cell(`<span class="badge c-warning">Warning</span>`, "warning") +
-        cell(`<span class="badge c-danger">Danger</span>`, "danger") +
-        cell(`<span class="badge c-info">Info</span>`, "info"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/tag"] = () => header("component", "태그", "Tag",
-    "콘텐츠의 속성·분류를 표시하는 라벨입니다.") +
-    themed(block("유형 Type",
-      cell(`<span class="tag tag--line">라인</span>`, "line") +
-      cell(`<span class="tag tag--fill">채움</span>`, "fill"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/chip"] = () => header("component", "칩", "Chip",
-    "필터·다중 선택을 토글 형태로 보여주는 컴포넌트입니다.") +
-    themed(block("상태 State",
-      cell(`<span class="chip">칩</span>`, "미선택") +
-      cell(`<span class="chip is-checked">칩</span>`, "선택됨") +
-      cell(`<span class="chip is-disabled">칩</span>`, "비활성"))) +
-    guide(G_DO, G_DONT);
-
-  P["component/alert"] = () => header("component", "얼럿", "Alert",
-    "상태·결과를 강조해 알리는 메시지 컴포넌트입니다.") +
-    themed(block("상태 State",
-      `<div style="display:flex;flex-direction:column;gap:12px;width:100%">
-        <div class="alert success"><span class="ico">✓</span>저장이 완료되었습니다.</div>
-        <div class="alert info"><span class="ico">ℹ</span>새로운 업데이트가 있습니다.</div>
-        <div class="alert danger"><span class="ico">✕</span>입력값을 확인해 주세요.</div>
-        <div class="alert warning"><span class="ico">!</span>저장하지 않은 변경이 있습니다.</div>
-        <div class="alert default">기본 알림 메시지입니다.</div>
-      </div>`)) +
-    guide(G_DO, G_DONT);
-
-  /* ---------------- Content builders ---------------- */
-  function grp(title, items) {
-    return `<h2 class="ov-grp">${title}</h2><div class="grid-cards">${items.map(a => card(a[0], a[1], a[2], a[3])).join("")}</div>`;
+  /* ===== Component 상세 (텍스트=코드 / 데모=Figma PNG, 제품별 스왑) ===== */
+  function componentPage(id) {
+    const m = MODEL["component/" + id];
+    if (!m || !m.secs) return "<p>준비 중입니다.</p>";
+    const body = m.secs.map(s => {
+      if (s.guide) return guide(s.guide.do, s.guide.dont);
+      const imgs = s.imgs.map(slug =>
+        `<img class="demoimg" data-base="${slug}" src="img/demo/${slug}.png" alt="${s.title} 미리보기" loading="lazy">`).join("");
+      return `<div class="sec"><h2 class="sec__title">${s.title}</h2>${s.desc ? `<p class="sec__desc">${s.desc}</p>` : ""}
+        <div class="demowrap">${imgs}</div></div>`;
+    }).join("");
+    return headRaw("component", m.head.crumb, m.head.title, m.head.desc) + themed(body);
   }
-  function ramp(name, key) {
-    const steps = [5, 10, 30, 40, 50, 60, 70, 80];
-    return `<div class="ramp-name">${name} <em>primary</em></div>
-      <div class="ramp">${steps.map(s => {
-        const light = s <= 30;
-        return `<div class="swatch ${light ? "dark" : ""}" style="background:var(--${key}-${s})"><b>primary/${s}${s === 50 ? " · Base" : ""}</b></div>`;
-      }).join("")}</div>`;
-  }
-  function sw(name, hex, light) { return `<div class="swatch ${light ? "dark" : ""}" style="background:${hex}"><b>${name}</b>${hex}</div>`; }
-  function stCard(big, t, d) { return `<div class="st-card"><div class="st-big">${big}</div><b>${t}</b><span>${d}</span></div>`; }
+  NAV.component.groups.forEach(g => g.items.forEach(([id]) => {
+    if (id !== "overview") P["component/" + id] = () => componentPage(id);
+  }));
 
-  function field(cap, state) {
-    const cls = state === "error" ? " is-error" : state === "disabled" ? " is-disabled" : "";
-    const ph = state === "disabled" ? "" : "내용을 입력하세요";
-    const fs = state === "focus" ? ` style="border-color:var(--brand-solid);box-shadow:0 0 0 3px var(--brand-bg)"` : "";
-    const msg = state === "focus" ? `<div class="field__msg info">ℹ 메시지를 입력해 주세요</div>`
-      : state === "error" ? `<div class="field__msg error">✕ 메시지를 입력해 주세요</div>` : "";
-    return `<div class="cell"><div class="field${cls}"><span class="field__label">레이블</span>
-      <span class="field__hint">입력시 필요한 정보를 입력해 주세요</span>
-      <div style="position:relative"><input class="input" placeholder="${ph}" ${state === "disabled" ? "disabled" : ""}${fs}>
-      <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%)">${eye}</span></div>${msg}</div>
-      <span class="cell__cap">${cap}</span></div>`;
-  }
-  function ta(cap, state) {
-    const cls = state === "error" ? " is-error" : state === "disabled" ? " is-disabled" : "";
-    const fs = state === "focus" ? ` style="border-color:var(--brand-solid);box-shadow:0 0 0 3px var(--brand-bg)"` : "";
-    const msg = state === "error" ? `<div class="field__msg error">✕ 메시지를 입력해 주세요</div>` : "";
-    return `<div class="cell"><div class="field${cls}"><span class="field__label">레이블</span>
-      <textarea class="textarea" placeholder="${state === "disabled" ? "" : "내용을 입력하세요"}" ${state === "disabled" ? "disabled" : ""}${fs}></textarea>${msg}</div>
-      <span class="cell__cap">${cap}</span></div>`;
-  }
-  function searchField(cap, state) {
-    const cls = state === "error" ? " is-error" : "";
-    const st = "padding-left:38px;" + (state === "focus" ? "border-color:var(--brand-solid);box-shadow:0 0 0 3px var(--brand-bg);" : "");
-    return `<div class="cell"><div class="field${cls}">
-      <div style="position:relative">
-        <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%)">${icRaw("search", 18, "#9aa2b1")}</span>
-        <input class="input" style="${st}" placeholder="검색어를 입력하세요"></div></div>
-      <span class="cell__cap">${cap}</span></div>`;
-  }
-  function selectField(cap, state) {
-    const cls = state === "error" ? " is-error" : state === "disabled" ? " is-disabled" : "";
-    const fs = state === "focus" ? ` style="border-color:var(--brand-solid);box-shadow:0 0 0 3px var(--brand-bg)"` : "";
-    return `<div class="cell"><div class="field${cls}"><span class="field__label">레이블</span>
-      <select class="select" ${state === "disabled" ? "disabled" : ""}${fs}><option>선택해 주세요</option></select></div>
-      <span class="cell__cap">${cap}</span></div>`;
-  }
-  function dateField(cap, state) {
-    const cls = state === "error" ? " is-error" : state === "disabled" ? " is-disabled" : "";
-    const fs = state === "focus" ? ` style="border-color:var(--brand-solid);box-shadow:0 0 0 3px var(--brand-bg)"` : "";
-    return `<div class="cell"><div class="field${cls}">
-      <div style="position:relative"><input class="input" value="${state === "disabled" ? "" : "2026-06-21"}" ${state === "disabled" ? "disabled" : ""}${fs}>
-      <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%)">${icRaw("calendar", 18, "#9aa2b1")}</span></div></div>
-      <span class="cell__cap">${cap}</span></div>`;
-  }
-  function calendarEl(mode) {
-    const days = ["일", "월", "화", "수", "목", "금", "토"];
-    let cells = "";
-    for (let d = 1; d <= 30; d++) {
-      let cls = "cd";
-      if (mode === "day" && d === 14) cls += " is-sel";
-      if (mode === "period" && d >= 12 && d <= 18) cls += d === 12 || d === 18 ? " is-sel" : " is-range";
-      cells += `<span class="${cls}">${d}</span>`;
-    }
-    return `<div class="cal"><div class="cal-h"><span>‹</span><b>2026.06</b><span>›</span></div>
-      <div class="cal-w">${days.map(x => `<span>${x}</span>`).join("")}</div>
-      <div class="cal-g"><span class="cd off"></span><span class="cd off"></span>${cells}</div></div>`;
-  }
-  function menuEl(items) {
-    return `<div class="menu">${items.map((x, i) => `<div class="menu-i ${i === 0 ? "is-on" : ""}">${x}</div>`).join("")}</div>`;
-  }
-  function acc(open) {
-    return `<div class="acc">
-      <div class="acc-h">아코디언 제목<span>${open ? "▴" : "▾"}</span></div>
-      ${open ? `<div class="acc-b">펼쳐진 내용 영역입니다. 항목에 대한 상세 설명이 여기에 표시됩니다.</div>` : ""}
-    </div>`;
-  }
-  function tableEl(checkbox) {
-    const head = `<tr>${checkbox ? `<th style="width:40px">${cbox(false)}</th>` : ""}<th>이름</th><th>상태</th><th>날짜</th></tr>`;
-    const rows = [["김미정", "활성", "06.21"], ["박준호", "대기", "06.20"], ["이용철", "활성", "06.19"]]
-      .map(r => `<tr>${checkbox ? `<td>${cbox(false)}</td>` : ""}<td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
-    return `<table class="dtable" style="min-width:360px"><thead>${head}</thead><tbody>${rows}</tbody></table>`;
-  }
-  function listEl(depth) {
-    if (depth === 1) return `<div class="lst">${["첫 번째 항목", "두 번째 항목", "세 번째 항목"].map(x => `<div class="lst-i">${x}</div>`).join("")}</div>`;
-    if (depth === 2) return `<div class="lst">${["상위 항목 A", "상위 항목 B"].map(x => `<div class="lst-i">${x}<div class="lst-sub"><div class="lst-i">하위 항목 1</div><div class="lst-i">하위 항목 2</div></div></div>`).join("")}</div>`;
-    return `<div class="lst"><div class="lst-i">상위 항목<div class="lst-sub"><div class="lst-i">중간 항목<div class="lst-sub"><div class="lst-i">하위 항목</div></div></div></div></div></div>`;
-  }
-  function modalEl() {
-    return `<div class="mdl">
-      <div class="mdl-h"><b>모달 제목</b><span>✕</span></div>
-      <div class="mdl-b">모달 본문 영역입니다. 사용자에게 중요한 정보를 전달하거나 확인을 요청합니다.</div>
-      <div class="mdl-f"><button class="btn btn--tertiary btn--sm">취소</button><button class="btn btn--primary btn--sm">확인</button></div>
-    </div>`;
-  }
-  function tip(dir) { return `<div class="tipwrap tip-${dir}"><span class="tip-target">${icRaw("info", 18, "#50596b")}</span><span class="tip-bubble">툴팁 메시지</span></div>`; }
-
-  function cbox(checked, ind, dis) {
-    return `<label class="check ${ind ? "is-indeterminate" : ""} ${dis ? "is-disabled" : ""}">
-      <input type="checkbox" ${checked ? "checked" : ""} ${dis ? "disabled" : ""}>
-      <span class="box">${ind ? `<svg width="12" height="12"><rect x="2" y="5" width="8" height="2" rx="1" fill="#fff"/></svg>` : check}</span></label>`;
-  }
-  function rbox(checked, dis) {
-    return `<label class="radio ${dis ? "is-disabled" : ""}"><input type="radio" ${checked ? "checked" : ""} ${dis ? "disabled" : ""}><span class="box"></span></label>`;
-  }
-  function tog(on, dis) {
-    return `<label class="toggle ${dis ? "is-disabled" : ""}"><input type="checkbox" ${on ? "checked" : ""} ${dis ? "disabled" : ""}><span class="track"></span></label>`;
-  }
-
-  /* ---------------- Icons (24px grid / 2px stroke) ---------------- */
+  /* ---------------- Icons (24px / 2px stroke) ---------------- */
   const IP = {
     "arrow-right": `<path d="M5 12h14M13 6l6 6-6 6"/>`, "arrow-left": `<path d="M19 12H5M11 6l-6 6 6 6"/>`,
     "arrow-up": `<path d="M12 19V5M6 11l6-6 6 6"/>`, "arrow-down": `<path d="M12 5v14M6 13l6 6 6-6"/>`,
@@ -612,10 +340,9 @@
     eye: `<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>`,
     "map-pin": `<path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>`,
   };
-  function icRaw(name, size, color) {
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color || "currentColor"}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IP[name] || IP.home}</svg>`;
+  function ic(name, size) {
+    return `<svg width="${size || 24}" height="${size || 24}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IP[name] || IP.home}</svg>`;
   }
-  function ic(name, size) { return icRaw(name, size || 24); }
   const ICON_CATS = [
     ["화살표 · 방향", ["arrow-right", "arrow-left", "arrow-up", "arrow-down", "chevron-right", "chevron-left", "chevron-up", "chevron-down", "refresh", "external-link"]],
     ["내비게이션", ["home", "search", "menu", "close", "more-vertical", "grid"]],
@@ -675,6 +402,8 @@
       const wrap = tab.closest(".themed");
       wrap.dataset.theme = tab.dataset.p;
       wrap.querySelectorAll(".tab").forEach(t => t.classList.toggle("is-active", t === tab));
+      const suffix = tab.dataset.p === "rdpline" ? "-rdpline" : tab.dataset.p === "wigoview" ? "-wigoview" : "";
+      wrap.querySelectorAll(".demoimg").forEach(img => { img.src = "img/demo/" + img.dataset.base + suffix + ".png"; });
     }
   });
 
