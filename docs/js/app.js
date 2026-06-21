@@ -116,10 +116,40 @@
         `<div class="box-demo"><div class="b" style="width:72px;height:72px;border-radius:${v}px"></div><span class="cell__cap">${n} · ${v === 999 ? "full" : v + "px"}</span></div>`).join("")}</div>`);
 
   P["foundation/iconography"] = () => header("foundation", "아이콘", "Iconography",
-    "24px 그리드·2px 스트로크 기준의 라인 아이콘입니다. AISURFER 아이콘 세트(376종)를 사용합니다.") +
-    sec("샘플 Sample", "",
-      `<div class="demo">${["home", "search", "bell", "user", "settings", "heart", "star", "mail", "calendar", "trash"]
-        .map(n => `<div class="cell">${ICON[n] || ICON.home}<span class="cell__cap">${n}</span></div>`).join("")}</div>`);
+    "AISURFER 디자인 시스템 기반의 아이콘입니다. 24px 기준 그리드 위에서 stroke icon(원본)을 제작하고, 디자인 구성에는 outline stroke로 면 처리한 fill icon을 사용합니다. 사용 크기는 16·20·24·32·40·48px입니다.") +
+    sec("키라인 그리드 Keyline Grid", "24px 프레임 안 20px 키셰이프를 기준으로 제작하며, 상하좌우 2px를 여백(trim)으로 둡니다.",
+      `<div class="demo">
+        <div class="keyframe"><span class="keyshape sq"></span></div>
+        <div class="keyleg">
+          ${kl("정사각형 키셰이프", "20 × 20 — 기본 형태 (홈·설정 등)")}
+          ${kl("원형 키셰이프", "지름 20 — 둥근 형태 (알림·사용자 등)")}
+          ${kl("세로 직사각형", "16 × 20 — 세로형 (문서·책 등)")}
+          ${kl("가로 직사각형", "20 × 16 — 가로형 (이미지·카드 등)")}
+          <p class="keynote">• 24px 프레임 기준 상하좌우 2px를 여백으로 둡니다.</p>
+        </div>
+      </div>`) +
+    sec("스트로크 & 스타일 Stroke & Style", "",
+      `<div class="demo">
+        ${stCard("2px", "선 두께", "모든 아이콘 2px 통일")}
+        ${stCard("Round", "끝점 · 꼭짓점", "둥근 캡 · 조인 사용")}
+        ${stCard("2px", "모서리 반경", "꺾임은 2px radius")}
+        ${stCard("24px", "기본 사이즈", "24px 그리드 1:1 제작")}
+      </div>`) +
+    sec("아이콘 크기 Icon Size", "시스템 아이콘의 기준 사이즈는 24px이며, 16·20·24·32·40·48px를 사용합니다.",
+      `<div class="demo demo--center" style="gap:32px">
+        ${[16, 20, 24, 32, 40, 48].map(s => `<div class="cell"><div class="szbox" style="width:${s}px;height:${s}px">${ic("star", s)}</div><span class="cell__cap">${s}px</span></div>`).join("")}
+      </div>`) +
+    sec("Stroke icon vs Fill icon", "stroke icon은 디자인 원본이고, fill icon은 이를 outline stroke해 면으로 변형한 아이콘입니다. 디자인 구성에는 fill icon을 사용합니다.",
+      `<div class="demo" style="gap:24px">
+        <div class="sfcard"><div class="sfico">${ic("bell", 40)}</div><b>Stroke icon</b><span>선으로 구성된 원본. 형태 수정 시 사용</span></div>
+        <div class="sfcard"><div class="sfico">${ic("bell", 40, true)}</div><b>Fill icon <em>권장</em></b><span>면으로 변형한 아이콘. 실제 구성에 사용</span></div>
+      </div>`) +
+    `<div class="sec"><h2 class="sec__title">카테고리별 아이콘 세트</h2>
+      ${ICON_CATS.map(([title, names]) => `<div class="ico-cat"><h4>${title} <span>${names.length}</span></h4>
+        <div class="ico-grid">${names.map(n => `<div class="ico-tile">${ic(n, 24)}<span>${n}</span></div>`).join("")}</div></div>`).join("")}
+    </div>` +
+    guide(["24px 키라인 그리드 위에서 제작", "2px 스트로크 · 둥근 끝점 유지", "무게 중심을 프레임 중앙에"],
+          ["임의로 선 굵기 변경 (예: 4px)", "각진 끝점 · 꼭짓점 혼용", "비율을 늘리거나 찌그러뜨리기"]);
 
   P["foundation/elevation"] = () => header("foundation", "그림자", "Elevation",
     "표면의 높이를 그림자로 표현합니다.") +
@@ -298,20 +328,92 @@
     </div></div>`;
   }
 
-  /* ---------------- Icons ---------------- */
-  const I = (p) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-default)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
-  const ICON = {
-    home: I(`<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>`),
-    search: I(`<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>`),
-    bell: I(`<path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 20a2 2 0 0 0 4 0"/>`),
-    user: I(`<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>`),
-    settings: I(`<circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/>`),
-    heart: I(`<path d="M12 20s-8-5-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11Z"/>`),
-    star: I(`<path d="M12 3l2.6 5.3 5.9.9-4.3 4.2 1 5.9L12 16.8 6.8 19.3l1-5.9L3.5 9.2l5.9-.9Z"/>`),
-    mail: I(`<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/>`),
-    calendar: I(`<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>`),
-    trash: I(`<path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13h10l1-13"/>`),
+  function kl(t, d) { return `<div class="kl-row"><span class="kl-dot"></span><div><b>${t}</b><span>${d}</span></div></div>`; }
+  function stCard(big, t, d) { return `<div class="st-card"><div class="st-big">${big}</div><b>${t}</b><span>${d}</span></div>`; }
+
+  /* ---------------- Icons (AISURFER-style line icons, 24px grid / 2px stroke) ---------------- */
+  const IP = {
+    /* 화살표 · 방향 */
+    "arrow-right": `<path d="M5 12h14M13 6l6 6-6 6"/>`, "arrow-left": `<path d="M19 12H5M11 6l-6 6 6 6"/>`,
+    "arrow-up": `<path d="M12 19V5M6 11l6-6 6 6"/>`, "arrow-down": `<path d="M12 5v14M6 13l6 6 6-6"/>`,
+    "chevron-right": `<path d="M9 6l6 6-6 6"/>`, "chevron-left": `<path d="M15 6l-6 6 6 6"/>`,
+    "chevron-up": `<path d="M6 15l6-6 6 6"/>`, "chevron-down": `<path d="M6 9l6 6 6-6"/>`,
+    refresh: `<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v5h-5"/>`, "external-link": `<path d="M14 4h6v6M20 4l-9 9M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>`,
+    /* 내비게이션 */
+    home: `<path d="M3 11l9-8 9 8M5 10v10h14V10"/>`, search: `<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>`,
+    menu: `<path d="M4 7h16M4 12h16M4 17h16"/>`, close: `<path d="M6 6l12 12M18 6L6 18"/>`,
+    "more-vertical": `<circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/>`,
+    grid: `<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>`,
+    /* 액션 */
+    plus: `<path d="M12 5v14M5 12h14"/>`, minus: `<path d="M5 12h14"/>`,
+    edit: `<path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3zM14.5 6.5l3 3"/>`,
+    copy: `<path d="M8 8h11v11H8zM4 16V4h11"/>`, trash: `<path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/>`,
+    download: `<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>`, upload: `<path d="M12 20V8M7 13l5-5 5 5M5 4h14"/>`,
+    share: `<circle cx="5" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M7 11l9-4M7 13l9 4"/>`,
+    filter: `<path d="M3 5h18l-7 8v6l-4-2v-4z"/>`, settings: `<circle cx="12" cy="12" r="3.3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>`,
+    save: `<path d="M5 4h11l3 3v13H5zM8 4v5h7M8 13h8v7H8z"/>`,
+    /* 상태 · 알림 */
+    bell: `<path d="M6 9a6 6 0 0 1 12 0c0 4.5 1.5 5.5 2 6.5H4c.5-1 2-2 2-6.5ZM10 20a2 2 0 0 0 4 0"/>`,
+    info: `<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".6" fill="currentColor"/>`,
+    warning: `<path d="M12 4l9 16H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/>`,
+    "check-circle": `<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>`,
+    "close-circle": `<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>`,
+    "help-circle": `<circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 1 1 3 2.4c-.8.4-1 .8-1 1.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/>`,
+    heart: `<path d="M12 20s-8-5-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11Z"/>`,
+    star: `<path d="M12 3l2.6 5.3 5.9.9-4.3 4.2 1 5.9L12 16.8 6.8 19.3l1-5.9L3.5 9.2l5.9-.9Z"/>`,
+    bookmark: `<path d="M6 4h12v17l-6-4-6 4z"/>`,
+    /* 미디어 */
+    play: `<path d="M7 5l12 7-12 7z"/>`, pause: `<path d="M8 5v14M16 5v14"/>`,
+    image: `<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M5 18l5-5 4 4 3-3 3 3"/>`,
+    video: `<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/>`,
+    volume: `<path d="M4 9v6h4l5 4V5L8 9zM16 9a3 3 0 0 1 0 6M18.5 7a6 6 0 0 1 0 10"/>`,
+    mic: `<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/>`,
+    camera: `<path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3"/>`,
+    /* 커뮤니케이션 */
+    mail: `<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/>`,
+    chat: `<path d="M4 5h16v11H9l-4 4v-4H4z"/>`,
+    phone: `<path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>`,
+    user: `<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>`,
+    users: `<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-5.5 6-5.5s6 2 6 5.5M16 5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.2-4.3-3.5-5"/>`,
+    /* 파일 · 폴더 */
+    file: `<path d="M6 3h8l5 5v13H6zM14 3v5h5"/>`,
+    folder: `<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>`,
+    "folder-open": `<path d="M4 6a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v1H4zM3 9h19l-2.2 9a1 1 0 0 1-1 1H4.2a1 1 0 0 1-1-1z"/>`,
+    clipboard: `<path d="M9 4h6v3H9zM7 5H6v15h12V5h-1"/>`,
+    link: `<path d="M9 15l6-6M8 12l-2 2a3 3 0 0 0 4 4l2-2M16 12l2-2a3 3 0 0 0-4-4l-2 2"/>`,
+    /* 커머스 */
+    cart: `<path d="M3 4h2l2 12h11l2-8H6"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/>`,
+    tag: `<path d="M3 4h8l9 9-7 7-9-9z"/><circle cx="7.5" cy="8.5" r="1.2"/>`,
+    "credit-card": `<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>`,
+    gift: `<path d="M4 11h16v9H4zM3 8h18v3H3zM12 8v12M12 8C9 8 8 4 10.5 4S12 8 12 8M12 8c3 0 4-4 1.5-4S12 8 12 8"/>`,
+    /* 디바이스 · 시간 */
+    monitor: `<rect x="3" y="5" width="18" height="11" rx="1.5"/><path d="M9 20h6M12 16v4"/>`,
+    smartphone: `<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>`,
+    clock: `<circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/>`,
+    calendar: `<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>`,
+    lock: `<rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>`,
+    eye: `<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>`,
+    "map-pin": `<path d="M12 21s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>`,
   };
+  const IPF = { /* fill 버전 */
+    bell: `<path d="M12 2a6 6 0 0 0-6 6c0 4.5-1.5 5.5-2 6.5h16c-.5-1-2-2-2-6.5a6 6 0 0 0-6-6ZM9.5 18a2.5 2.5 0 0 0 5 0Z" fill-rule="evenodd"/>`,
+  };
+  function ic(name, size, fill) {
+    size = size || 24;
+    if (fill && IPF[name]) return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor">${IPF[name]}</svg>`;
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IP[name] || IP.home}</svg>`;
+  }
+  const ICON_CATS = [
+    ["화살표 · 방향", ["arrow-right", "arrow-left", "arrow-up", "arrow-down", "chevron-right", "chevron-left", "chevron-up", "chevron-down", "refresh", "external-link"]],
+    ["내비게이션", ["home", "search", "menu", "close", "more-vertical", "grid"]],
+    ["액션", ["plus", "minus", "edit", "copy", "trash", "download", "upload", "share", "filter", "settings", "save"]],
+    ["상태 · 알림", ["bell", "info", "warning", "check-circle", "close-circle", "help-circle", "heart", "star", "bookmark"]],
+    ["미디어", ["play", "pause", "image", "video", "volume", "mic", "camera"]],
+    ["커뮤니케이션", ["mail", "chat", "phone", "user", "users"]],
+    ["파일 · 폴더", ["file", "folder", "folder-open", "clipboard", "link"]],
+    ["커머스", ["cart", "tag", "credit-card", "gift"]],
+    ["디바이스 · 시간", ["monitor", "smartphone", "clock", "calendar", "lock", "eye", "map-pin"]],
+  ];
 
   /* ---------------- Render / Routing ---------------- */
   const gnbNav = document.getElementById("gnbNav");
