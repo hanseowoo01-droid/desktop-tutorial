@@ -9,14 +9,14 @@
   /* ---------------- Navigation model (Figma LNB 그대로) ---------------- */
   const NAV = {
     ux: {
-      label: "UX 원칙",
+      label: "UX 원칙", lnbTitle: "UX 원칙",
       groups: [{ items: [
         ["overview", "Overview"], ["principles", "핵심 원칙"],
         ["decisive", "결정적 경험"], ["priority", "우선순위 규칙"],
       ] }],
     },
     foundation: {
-      label: "Foundation",
+      label: "Foundation", lnbTitle: "FOUNDATION",
       groups: [{ items: [
         ["overview", "Overview"], ["color", "Color"], ["typography", "Typography"],
         ["spacing", "Spacing"], ["iconography", "Iconography"], ["elevation", "Elevation"],
@@ -24,7 +24,7 @@
       ] }],
     },
     component: {
-      label: "Component",
+      label: "Component", lnbTitle: "COMPONENT",
       groups: [
         { items: [["overview", "Overview"]] },
         { title: "액션", items: [["button", "Button"]] },
@@ -74,7 +74,8 @@
 
   function renderLNB(section, page) {
     const s = NAV[section];
-    lnb.innerHTML = s.groups.map(g =>
+    const head = s.lnbTitle ? `<div class="lnb__title">${s.lnbTitle}</div>` : "";
+    lnb.innerHTML = head + s.groups.map(g =>
       (g.title ? `<div class="lnb__group">${g.title}</div>` : "") +
       g.items.map(([id, label]) =>
         `<button class="lnb__item ${id === page ? "is-active" : ""}" data-page="${id}">${label}</button>`).join("")
