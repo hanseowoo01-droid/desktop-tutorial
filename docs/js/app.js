@@ -26,7 +26,7 @@
         { title: "액션", items: [["button", "Button"]] },
         { title: "입력", items: [["input", "Input"], ["textarea", "Textarea"], ["search", "Search"], ["select", "Select"],
           ["checkbox", "Checkbox"], ["radio", "Radio"], ["toggle", "Toggle"], ["date-input", "Date input"], ["calendar", "Calendar"]] },
-        { title: "탐색", items: [["tab", "Tab"], ["pagination", "Pagination"], ["menu", "Menu"], ["accordion", "Accordion"]] },
+        { title: "탐색", items: [["tab", "Tab"], ["pagination", "Pagination"], ["accordion", "Accordion"]] },
         { title: "정보 표시", items: [["table", "Table"], ["list", "List"], ["badge", "Badge"], ["tag", "Tag"], ["chip", "Chip"], ["title", "Title"], ["carousel", "Carousel"]] },
         { title: "피드백", items: [["modal", "Modal"], ["tooltip", "Tooltip"], ["alert", "Alert"]] },
       ],
@@ -156,7 +156,7 @@
       ["토글 스위치", "Toggle", "켜기/끄기 전환", "toggle"], ["날짜 입력", "Date input", "날짜 입력 필드", "date-input"],
       ["달력", "Calendar", "날짜에서 날짜 선택", "calendar"]]) +
     grp("탐색", [["탭", "Tab", "화면·콘텐츠 전환", "tab"], ["페이지네이션", "Pagination", "목록 페이지 이동", "pagination"],
-      ["메뉴", "Menu", "내비게이션 메뉴", "menu"], ["아코디언", "Accordion", "접고 펴는 패널", "accordion"]]) +
+      ["아코디언", "Accordion", "접고 펴는 패널", "accordion"]]) +
     grp("정보 표시", [["테이블", "Table", "데이터를 표로 표시", "table"], ["리스트", "List", "항목 목록", "list"],
       ["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
       ["칩", "Chip", "선택·필터 토큰", "chip"], ["타이틀", "Title", "영역 제목", "title"],
