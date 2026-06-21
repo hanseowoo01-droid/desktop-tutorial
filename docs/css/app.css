@@ -70,11 +70,6 @@ button { font-family: inherit; }
 }
 .prodhit .hit:hover { background: rgba(20, 26, 36, .05); }
 
-/* 준비 중 섹션 */
-.empty { padding: 96px 72px; }
-.empty h1 { font-size: 32px; font-weight: 700; color: var(--text-strong); margin: 0 0 12px; }
-.empty p { font-size: 15px; color: var(--text-subtle); margin: 0; }
-
 /* ---------- Page header ---------- */
 .bc { font-size: 13px; color: var(--text-subtle); margin-bottom: 14px; }
 .bc span { color: var(--text-disabled); margin: 0 6px; }

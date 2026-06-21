@@ -29,7 +29,6 @@ Figma와 픽셀 단위로 동일합니다. 빌드·설치 없이 `docs/index.htm
 - **Component**: Overview / 액션(Button) / 입력(Input·Textarea·Search·Select·Checkbox·Radio·Toggle·Date input·Calendar) /
   탐색(Tab·Pagination·Menu·Accordion) / 정보 표시(Table·List·Badge·Tag·Chip·Title·Carousel) /
   피드백(Modal·Tooltip·Alert) — 각 컴포넌트는 3제품 변형 제공
-- **Pattern · Resource**: GNB에 노출되어 있으나 화면 준비 중
 
 ## 이미지 다시 받기
 

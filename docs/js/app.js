@@ -45,9 +45,6 @@
         ] },
       ],
     },
-    // GNB에는 있으나 아직 화면이 없는 섹션 (Figma 기준)
-    pattern: { label: "Pattern", groups: [], empty: true },
-    resource: { label: "Resource", groups: [], empty: true },
   };
 
   // 제품 변형(RDPLINE / WIGOVIEW)이 있는 건 component 섹션의 overview 외 전부.
@@ -82,20 +79,11 @@
     ).join("");
   }
 
-  function placeholder(label) {
-    return `<div class="empty">
-      <h1>${label}</h1>
-      <p>이 섹션은 아직 준비 중입니다.</p>
-    </div>`;
-  }
-
   function screenImg(slug) {
     return `<img class="screen" src="img/${slug}.png" alt="${slug}" loading="lazy">`;
   }
 
   function renderContent(section, page) {
-    if (NAV[section].empty) { content.innerHTML = placeholder(NAV[section].label); return; }
-
     const base = section + "-" + page; // ex) foundation-color, component-button
 
     if (hasProductTabs(section, page)) {
@@ -134,7 +122,7 @@
     if (!NAV[section]) section = "foundation";
     const fp = firstPage(section);
     const valid = NAV[section].groups.some(g => g.items.some(([id]) => id === page));
-    if (!valid) page = fp; // empty 섹션이면 fp === null
+    if (!valid) page = fp;
 
     Array.from(gnbNav.children).forEach(b =>
       b.classList.toggle("is-active", b.dataset.section === section));
