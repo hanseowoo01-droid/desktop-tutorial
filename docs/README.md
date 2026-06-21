@@ -1,7 +1,7 @@
 # BECUAI Design System — Web
 
 Figma로 만든 **BECUAI 디자인 시스템**을 정적 문서 사이트로 옮긴 구현입니다.
-빌드·설치 없이 `web/index.html`을 브라우저로 열면 바로 동작합니다.
+빌드·설치 없이 `docs/index.html`을 브라우저로 열면 바로 동작합니다.
 
 ## 구성
 
@@ -23,6 +23,6 @@ Figma로 만든 **BECUAI 디자인 시스템**을 정적 문서 사이트로 옮
 
 ```bash
 # 정적 파일이라 그냥 열어도 되지만, 로컬 서버 권장
-cd web && python3 -m http.server 8000
+cd docs && python3 -m http.server 8000
 # http://localhost:8000 접속
 ```
