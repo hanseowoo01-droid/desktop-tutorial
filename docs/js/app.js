@@ -46,7 +46,7 @@
   }
   function themed(inner) {
     const tabs = ["aisurfer", "rdpline", "wigoview"].map((p, i) =>
-      `<button class="tab ${i === 0 ? "is-active" : ""}" data-p="${p}"><span class="dot"></span>${p.toUpperCase()}</button>`).join("");
+      `<button class="tab ${i === 0 ? "is-active" : ""}" data-p="${p}">${p.toUpperCase()}</button>`).join("");
     return `<div class="themed" data-theme="aisurfer"><div class="tabs">${tabs}</div><div class="themed-body">${inner}</div></div>`;
   }
   function sec(t, d, body) { return `<div class="sec"><h2 class="sec__title">${t}</h2>${d ? `<p class="sec__desc">${d}</p>` : ""}${body}</div>`; }
