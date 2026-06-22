@@ -28,7 +28,7 @@ button { font-family: inherit; }
 .gnb__name { font-weight: 700; color: #141a24; font-size: 17px; line-height: 1.5; }
 .gnb__ver { font-size: 11px; font-weight: 700; color: #50596b;
   background: #f2f3f6; border-radius: 6px; padding: 3px 8px; line-height: 1.5; }
-.gnb__nav { display: flex; gap: 6px; margin-left: 64px; }
+.gnb__nav { display: flex; gap: 6px; margin-left: 96px; }
 .gnb__item {
   padding: 7px 14px; border-radius: 8px; font-size: 15px; font-weight: 500; line-height: 1.5;
   color: #50596b; background: none; border: 0; cursor: pointer;
