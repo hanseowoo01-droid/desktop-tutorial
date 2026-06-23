@@ -154,14 +154,14 @@
       ["검색", "Search", "검색어 입력 필드", "search"], ["셀렉트", "Select", "목록에서 선택하는 드롭다운", "select"],
       ["체크박스", "Checkbox", "다중 선택", "checkbox"], ["라디오", "Radio", "단일 선택", "radio"],
       ["토글 스위치", "Toggle", "켜기/끄기 전환", "toggle"], ["날짜 입력", "Date input", "날짜 입력 필드", "date-input"],
-      ["달력", "Calendar", "날짜에서 날짜 선택", "calendar"]]) +
+      ["달력", "Calendar", "달력에서 날짜 선택", "calendar"]]) +
     grp("탐색", [["탭", "Tab", "화면·콘텐츠 전환", "tab"], ["페이지네이션", "Pagination", "목록 페이지 이동", "pagination"]]) +
     grp("정보 표시", [
       ["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
       ["칩", "Chip", "선택·필터 토큰", "chip"],
       ["캐러셀", "Carousel", "슬라이드 콘텐츠", "carousel"]]) +
-    grp("피드백", [["모달", "Modal", "집중이 필요한 다이얼로그", "modal"], ["툴팁", "Tooltip", "보조 설명 말풍선", "tooltip"],
-      ["얼럿", "Alert", "광고 알림 메시지", "alert"]]);
+    grp("피드백", [["모달", "Modal", "집중이 필요한 다이얼로그", "modal"], ["툴팁", "Tooltip", "보조 설명·코치마크", "tooltip"],
+      ["얼럿", "Alert", "경고·알림 메시지", "alert"]]);
 
   /* ===== Component 상세 (텍스트=코드 / 데모=Figma PNG, 제품 스왑) ===== */
   function componentPage(id) {
