@@ -1,0 +1,51 @@
+{
+  "fileKey": "puqXgaVd91e98kgv89jRDq",
+  "scale": 2,
+  "note": "Full-frame re-export manifest. Each entry: download node as PNG -> docs/img/full/<file>. Requires figma.com network access (download_assets/get_screenshot URL).",
+  "foundation": [
+    {"file": "foundation-overview.png", "node": "38:124", "route": "foundation/overview"},
+    {"file": "foundation-color.png", "node": "31:2", "route": "foundation/color"},
+    {"file": "foundation-typography.png", "node": "32:2", "route": "foundation/typography"},
+    {"file": "foundation-spacing.png", "node": "33:2", "route": "foundation/spacing"},
+    {"file": "foundation-iconography.png", "node": "35:2", "route": "foundation/iconography"},
+    {"file": "foundation-elevation.png", "node": "36:2", "route": "foundation/elevation"},
+    {"file": "foundation-radius.png", "node": "36:117", "route": "foundation/radius"},
+    {"file": "foundation-motion.png", "node": "38:2", "route": "foundation/motion"}
+  ],
+  "ux": [
+    {"file": "ux-overview.png", "node": "41:2", "route": "ux/overview"},
+    {"file": "ux-principles.png", "node": "41:100", "route": "ux/principles"},
+    {"file": "ux-decisive.png", "node": "42:2", "route": "ux/decisive"},
+    {"file": "ux-priority.png", "node": "42:136", "route": "ux/priority"}
+  ],
+  "componentOverview": {"file": "component-overview.png", "node": "48:3", "route": "component/overview"},
+  "component": {
+    "aisurfer": [
+      {"slug": "button", "node": "49:2"}, {"slug": "input", "node": "50:2"}, {"slug": "select", "node": "50:144"},
+      {"slug": "toggle", "node": "50:282"}, {"slug": "checkbox", "node": "51:2"}, {"slug": "radio", "node": "51:137"},
+      {"slug": "badge", "node": "51:265"}, {"slug": "tag", "node": "51:414"}, {"slug": "chip", "node": "51:550"},
+      {"slug": "textarea", "node": "172:10103"}, {"slug": "search", "node": "172:10755"}, {"slug": "date-input", "node": "172:11336"},
+      {"slug": "calendar", "node": "172:11931"}, {"slug": "tab", "node": "173:12104"}, {"slug": "pagination", "node": "173:12575"},
+      {"slug": "carousel", "node": "174:14960"}, {"slug": "modal", "node": "175:14729"}, {"slug": "tooltip", "node": "175:15252"},
+      {"slug": "alert", "node": "175:15807"}
+    ],
+    "rdpline": [
+      {"slug": "button", "node": "133:114"}, {"slug": "input", "node": "153:9982"}, {"slug": "select", "node": "151:10052"},
+      {"slug": "toggle", "node": "151:10449"}, {"slug": "checkbox", "node": "151:10741"}, {"slug": "radio", "node": "151:11703"},
+      {"slug": "badge", "node": "151:11985"}, {"slug": "tag", "node": "151:12321"}, {"slug": "chip", "node": "151:12613"},
+      {"slug": "textarea", "node": "172:10343"}, {"slug": "search", "node": "172:10966"}, {"slug": "date-input", "node": "172:11551"},
+      {"slug": "calendar", "node": "172:12406"}, {"slug": "tab", "node": "173:12267"}, {"slug": "pagination", "node": "173:12750"},
+      {"slug": "carousel", "node": "174:15117"}, {"slug": "modal", "node": "175:14916"}, {"slug": "tooltip", "node": "175:15443"},
+      {"slug": "alert", "node": "175:15998"}
+    ],
+    "wigoview": [
+      {"slug": "button", "node": "133:438"}, {"slug": "input", "node": "153:10173"}, {"slug": "select", "node": "151:10259"},
+      {"slug": "toggle", "node": "151:10595"}, {"slug": "checkbox", "node": "151:10887"}, {"slug": "radio", "node": "151:11844"},
+      {"slug": "badge", "node": "151:12153"}, {"slug": "tag", "node": "151:12467"}, {"slug": "chip", "node": "151:12764"},
+      {"slug": "textarea", "node": "172:10549"}, {"slug": "search", "node": "172:11151"}, {"slug": "date-input", "node": "172:11741"},
+      {"slug": "calendar", "node": "172:12822"}, {"slug": "tab", "node": "173:12421"}, {"slug": "pagination", "node": "173:12916"},
+      {"slug": "carousel", "node": "174:15265"}, {"slug": "modal", "node": "175:15084"}, {"slug": "tooltip", "node": "175:15625"},
+      {"slug": "alert", "node": "175:16180"}
+    ]
+  }
+}
