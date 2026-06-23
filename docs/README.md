@@ -28,7 +28,7 @@ Figma의 **BECUAI 디자인 시스템(V1.0)**을 정적 웹사이트로 구현�
 - **UX 원칙**: Overview · 핵심 원칙 · 결정적 경험 · 우선순위 규칙
 - **Foundation**: Overview · Color · Typography · Spacing · Iconography · Elevation · Radius · Motion
 - **Component**: Overview / 액션(Button) / 입력(Input·Textarea·Search·Select·Checkbox·Radio·Toggle·Date input·Calendar) /
-  탐색(Tab·Pagination·Menu·Accordion) / 정보 표시(Table·List·Badge·Tag·Chip·Title·Carousel) /
+  탐색(Tab·Pagination) / 정보 표시(Badge·Tag·Chip·Carousel) /
   피드백(Modal·Tooltip·Alert)
 
 ## 실행
