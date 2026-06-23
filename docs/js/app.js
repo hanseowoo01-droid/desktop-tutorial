@@ -12,7 +12,7 @@
   const NAV = {
     ux: {
       label: "UX 원칙", lnbTitle: "UX 원칙",
-      groups: [{ items: [["overview", "Overview"], ["principles", "핵심 원칙"], ["decisive", "결정적 경험"], ["priority", "우선순위 규칙"]] }],
+      groups: [{ items: [["overview", "Overview"], ["principles", "핵심 원칙"]] }],
     },
     foundation: {
       label: "Foundation", lnbTitle: "FOUNDATION",
@@ -97,34 +97,6 @@
       <div class="pc__bd"><div class="pc__bl">${bl.map(x => `<div class="bl-row"><span class="bl-dot"></span>${x}</div>`).join("")}</div>
         <div class="pc__mc"><b>측정 지표</b><span>${m}</span></div></div></div>`).join("")}</div>`;
 
-  P["ux/decisive"] = () => headFor("ux/decisive") +
-    `<div class="wlist">${[
-      ["오늘의 핵심 큐레이션", "김미정 · 대기업 PR", "보는 순간 판단", "관심뉴스 2,066건이 표로 쏟아져 어디부터 볼지 막막하다", "출근 첫 화면에서 오늘 꼭 봐야 할 핵심 이슈를 바로 판단"],
-      ["보고서 초안 자동화", "김미정 · 대기업 PR", "보고 1시간 단축", "스크랩→보고서 본문을 일일이 작성해 1시간이 걸린다", "선택 기사 기반 요약·문구 초안을 자동 생성"],
-      ["검색 누락 0건", "박준호 · 공공기관", "누락 0건", "검색이 여러 곳에 흩어지고 조건 저장이 안 돼 누락이 불안하다", "단일 검색창 + 조건 저장·구독으로 신규 보도 자동 알림"],
-      ["5분 내 가치 체감", "이용철 · 신규 트라이얼", "5분 내 가치", "온보딩 없이 표로 떨어져 5분 헤매다 이탈한다", "첫 로그인 3스텝 온보딩 + 가치 카드로 즉시 체감"],
-      ["하나의 제품 경험", "공통", "하나의 BECUAI", "WIGOMON·RDP·VU가 새 탭으로 흩어져 “같은 회사 맞나” 혼란", "4제품 인앱 통합 + 통일된 디자인 시스템"],
-    ].map(([t, u, b, a, w]) => `<div class="wc">
-      <div class="wc__tr"><div class="wc__tt"><b>${t}</b><span>${u}</span></div><span class="wc__mc">${b}</span></div>
-      <div class="wc__cols"><div class="wc__a"><span class="lab">As-Is</span><p>${a}</p></div>
-        <span class="wc__arr">→</span><div class="wc__w"><span class="lab">결정적 경험</span><p>${w}</p></div></div></div>`).join("")}</div>`;
-
-  P["ux/priority"] = () => headFor("ux/priority") +
-    sec("판단 기준", "",
-      `<div class="rrow">${[
-        ["UX", "UI", "UI 완성도보다 UX 결함을 먼저 제거한다"],
-        ["본질", "화려함", "감성·화려함보다 사용성의 본질을 우선한다"],
-        ["P0", "P2", "통합·일관성을 먼저, 반복 자동화는 나중에"],
-      ].map(([a, b, d]) => `<div class="rc"><div class="rc__r"><b>${a}</b><i>&gt;</i><b>${b}</b></div><p>${d}</p></div>`).join("")}</div>`) +
-    sec("개선 우선순위", "저니맵 공통 마찰 분석에서 도출한 실행 우선순위입니다. 위에서부터 순차적으로 해결합니다.",
-      `<div class="prio">${[
-        ["P0", "4제품 인앱 통합 · 디자인시스템 통일", ["WIGOMON·RDP·VU 인앱 통합", "토큰 기반 통합 디자인 시스템", "공통 아이콘·컴포넌트 세트"], "하나의 BECUAI 경험"],
-        ["P1", "단일 검색창·RDP 통합 · 첫화면 큐레이션·온보딩", ["검색 이원화 해소", "RDP 인앱 통합", "첫 로그인 온보딩"], "진입·검색 장벽 제거"],
-        ["P2", "툴바 라벨링 · 보고서 초안·정기보고 자동화", ["툴바 액션 라벨·툴팁", "보고서 초안 자동 생성", "정기 보고 예약·발송"], "반복 작업 단축"],
-      ].map(([lv, t, tags, eff]) => `<div class="pr"><span class="pr__lv">${lv}</span>
-        <div class="pr__mid"><b>${t}</b><div class="pr__tags">${tags.map(x => `<span>${x}</span>`).join("")}</div></div>
-        <div class="pr__oc"><span>기대 효과</span><b>${eff}</b></div></div>`).join("")}</div>`);
-
   /* ===== Foundation overview (코드 카드) ===== */
   P["foundation/overview"] = () => headFor("foundation/overview") +
     `<div class="grid-cards">
@@ -156,10 +128,8 @@
       ["토글 스위치", "Toggle", "켜기/끄기 전환", "toggle"], ["날짜 입력", "Date input", "날짜 입력 필드", "date-input"],
       ["달력", "Calendar", "달력에서 날짜 선택", "calendar"]]) +
     grp("탐색", [["탭", "Tab", "화면·콘텐츠 전환", "tab"], ["페이지네이션", "Pagination", "목록 페이지 이동", "pagination"]]) +
-    grp("정보 표시", [
-      ["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
-      ["칩", "Chip", "선택·필터 토큰", "chip"],
-      ["캐러셀", "Carousel", "슬라이드 콘텐츠", "carousel"]]) +
+    grp("정보 표시", [["배지", "Badge", "상태·수량 표시", "badge"], ["태그", "Tag", "속성·분류 표시", "tag"],
+      ["칩", "Chip", "선택·필터 토큰", "chip"], ["캐러셀", "Carousel", "슬라이드 콘텐츠", "carousel"]]) +
     grp("피드백", [["모달", "Modal", "집중이 필요한 다이얼로그", "modal"], ["툴팁", "Tooltip", "보조 설명·코치마크", "tooltip"],
       ["얼럿", "Alert", "경고·알림 메시지", "alert"]]);
 

@@ -6,34 +6,34 @@
 
 :root {
   /* ---- Primitive: AISURFER (primary) ramp ---- */
-  --aisurfer-5:  #e8efff;
+  --aisurfer-5:  #e3ebff;
   --aisurfer-10: #c9d7fe;
   --aisurfer-30: #7c9eff;
-  --aisurfer-40: #4d79ff;
+  --aisurfer-40: #5984ff;
   --aisurfer-50: #0e4dff;
   --aisurfer-60: #003de9;
   --aisurfer-70: #0030b7;
-  --aisurfer-80: #002285;
+  --aisurfer-80: #002283;
 
   /* ---- Primitive: RDPLINE ramp ---- */
-  --rdpline-5:  #ffe4e3;
-  --rdpline-10: #fecbc9;
-  --rdpline-30: #ff807c;
-  --rdpline-40: #ff5f59;
-  --rdpline-50: #ff160e;
-  --rdpline-60: #e90800;
-  --rdpline-70: #b70600;
-  --rdpline-80: #830400;
+  --rdpline-5:  #fce9e8;
+  --rdpline-10: #f8d0ce;
+  --rdpline-30: #ee8f8c;
+  --rdpline-40: #ee6c68;
+  --rdpline-50: #d80101;
+  --rdpline-60: #c50101;
+  --rdpline-70: #990101;
+  --rdpline-80: #770101;
 
   /* ---- Primitive: WIGOVIEW ramp ---- */
-  --wigoview-5:  #e6f6ec;
-  --wigoview-10: #c7ead4;
-  --wigoview-30: #66c389;
-  --wigoview-40: #34af68;
-  --wigoview-50: #15a04b;
-  --wigoview-60: #0d8c40;
-  --wigoview-70: #0a6e33;
-  --wigoview-80: #075325;
+  --wigoview-5:  #f8faf9;
+  --wigoview-10: #e0e9e5;
+  --wigoview-30: #77b399;
+  --wigoview-40: #489272;
+  --wigoview-50: #2a6049;
+  --wigoview-60: #265240;
+  --wigoview-70: #214437;
+  --wigoview-80: #1c362d;
 
   /* ---- Neutral / Gray ---- */
   --gray-0:   #ffffff;
@@ -84,7 +84,8 @@
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
   --radius-full: 999px;
 
   /* ---- Spacing (4px 배수) ---- */

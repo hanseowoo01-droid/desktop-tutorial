@@ -35,7 +35,7 @@ button { font-family: inherit; }
   transition: background var(--duration-fast) var(--ease-standard);
 }
 .gnb__item:hover { background: var(--gray-50); }
-.gnb__item.is-active { background: #ffe4e3; color: #ff160e; }
+.gnb__item.is-active { background: #fce9e8; color: #d80101; }
 
 /* ---------- Body: LNB + content ---------- */
 .body { display: flex; align-items: stretch; min-height: calc(100vh - 60px); background: #fff; }
@@ -55,7 +55,7 @@ button { font-family: inherit; }
   transition: background var(--duration-fast) var(--ease-standard);
 }
 .lnb__item:hover { background: var(--gray-50); }
-.lnb__item.is-active { background: #ffe4e3; color: #ff160e; }
+.lnb__item.is-active { background: #fce9e8; color: #d80101; }
 
 .content { flex: 1; min-width: 0; padding: 44px 72px 96px; max-width: 1660px; background: #fff; }
 .page-title em { font-style: normal; color: var(--text-subtle); font-weight: 500; }
